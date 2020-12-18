@@ -1,4 +1,4 @@
-class parity_checker;
+class parity_checker_model;
     logic [15:0] Internal_ERRCOUNTER = 0;
     logic reset_flag = 1'b0;
     bit error = 1'b0;
