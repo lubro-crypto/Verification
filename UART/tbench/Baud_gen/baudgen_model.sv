@@ -36,17 +36,20 @@ class baudgen_model;
         
         endcase
     endfunction
-    
+    bit outflag  = 1'b0;
     task run(input bit resetn, output bit baudtick, output [19:0] sim_count);
         if(!resetn)begin
             counting = 0;
-        end 
+        end
+        else if (outflag)begin
+            baudtick =1'b0;
+            outflag = 1'b0;
+            counting = 'b0;
+        end
         else if(counting == count - 1'b1)begin
 
             baudtick = 1'b1;
-            #20;
-            baudtick = 1'b0;
-            counting = 'd0;
+            outflag = 1'b1;
             end
         else begin
             counting = counting + 1;
