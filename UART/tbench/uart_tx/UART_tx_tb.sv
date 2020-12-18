@@ -18,8 +18,24 @@ class input_generator;
     randc logic [8:0] tx_input;
     rand bit PARITYSEL;
 endclass
+
 `include "uart_tx_model.sv"
 module uart_tx_tb(uart_tx_if.TB uartif);
+
+    covergroup cover_a_value;
+    coverpoint uartif.d_in 
+    {
+        bins zero = {0}; 
+        bins lo = {[1:2]};
+        bins med = {[3:4]};
+        bins hi = {[5:6]};
+        bins max = {7};
+    }
+    coverpoint uartif.PARITY_SEL {
+        bins even = {0};
+        bins odd = {1};
+    }
+    endgroup 
 
     logic [18:0] count_reg;
     logic baud_tick;
