@@ -71,7 +71,7 @@ module AHBUART(
   
   //wires between FIFO and TX/RX
   wire [7:0] tx_data;
-  wire [8:0] rx_data;
+  wire [7:0] rx_data;
   wire [31:0] status;
 
   //
@@ -92,11 +92,12 @@ module AHBUART(
   //parity type
   //0 - even
   //1 - odd
-  wire parity_type = 1'b1;
+  wire parity_type;
 
   //parity checker wires
   wire [15:0] ERRCOUNTER;
-  
+  wire RxParity; 
+  wire TxParity = 1'b0; //Change if you want 
 
   //AHB Regs
   reg [1:0] last_HTRANS;
@@ -105,9 +106,12 @@ module AHBUART(
   reg last_HSEL;
   
   //Baud Rate register 
-  reg [3:0] Baud_Reg;
+  reg [3:0] Baud_Reg = 'd0;
   wire baudrate_wr;
   
+  //pretend Rx ;
+  wire Tx_RS_232;
+  wire Rx_RS_232;
 //Set Registers for AHB Address State
   always@ (posedge HCLK)
   begin
@@ -130,7 +134,7 @@ module AHBUART(
   //UART  write select
   assign uart_wr = last_HTRANS[1] & last_HWRITE & last_HSEL& (last_HADDR[7:0]==8'h00);
 
-  assign baudrate_wr = last_HTRANS[1] & last_HWRITE & last_HSEL& (last_HADDR[7:0]==8'h01);
+  assign baudrate_wr = last_HTRANS[1] & last_HWRITE & last_HSEL& (last_HADDR[7:0]==8'h10);
   //Only write last 8 bits of Data
   assign uart_wdata = HWDATA[7:0];
 
@@ -142,14 +146,22 @@ module AHBUART(
   
   assign uart_irq = ~rx_empty; 
   
-  //generate a fixed baud rate 19200bps
   BAUDGEN uBAUDGEN(
     .clk(HCLK),
     .resetn(HRESETn),
     .set_baud(Baud_Reg),
     .baudtick(b_tick)
   );
-  
+  monitor_top mt0(
+    .clk(HCLK),
+    .Tx_parity(1'b0),
+    .HRESETn(HRESETn),
+    .ERRCOUNTER(ERRCOUNTER),
+    .Tx_RS_232(Tx_RS_232),
+    .Rx_RS_232(Rx_RS_232),
+    .Baud_Reg(Baud_Reg),
+    .Rx_parity(Rxparity)
+  );
   //Transmitter FIFO
   FIFO  
    #(.DWIDTH(8), .AWIDTH(4))
@@ -184,16 +196,17 @@ module AHBUART(
     .clk(HCLK),
     .resetn(HRESETn),
     .b_tick(b_tick),
-    .rx(RsRx),
+    .rx(Rx_RS_232),
     .rx_done(rx_done),
-    .dout({rx_data[8:0]})
+    .dout({RxParityBit,rx_data[7:0]})
   );
   
-  parity_checker_top pc0(
-    .d_in(rx_data),
-    .PARITYSEL(parity_type),
+  parity_check_top pc0(
+    .d_in({RxParityBit,rx_data[7:0]}),
+    .PARITYSEL(Rxparity),
     .resetn(HRESETn),
-    .ERRCOUNTER(ERRCOUNTER)
+    .ERRCOUNTER(ERRCOUNTER),
+    .start(rx_done)
   );
 
   //UART transmitter
@@ -204,10 +217,10 @@ module AHBUART(
     .b_tick(b_tick),
     .d_in(tx_data[7:0]),
     .tx_done(tx_done),
-    .tx(RsTx),
-    .PARITYSEL(parity_type)
+    .tx(Tx_RS_232),
+    .PARITYSEL(Txparity)
   );
  
- 
+  
   
 endmodule

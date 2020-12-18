@@ -61,17 +61,11 @@ initial
 always @ (posedge clk, negedge resetn)
   begin
     if(!resetn)begin
-      // assert (resetn == 0)
-      //   else $error ("Error: reset not low");
       count_reg <= 0;
     end
     else
       count_reg <= count_next;
 end
-
-
-//Baudrate  = 19200 = 50Mhz/(163*16)
-// 163 = 50M/(19200*16)
 
 assign index = 'd13 - set_baud;
 
@@ -91,15 +85,7 @@ assert_check_count_reg: assert property (check_count_reg)
     else $error("tick gone high when count reg != count");
 ////////////////////////////////////
 
-// Formal verification, reset can never go low so cant test this one
-// property check_reset;
-// @(posedge clk)
-//     // resetn == 1'b0 |-> baudtick == 1'b0 && count_reg == 'd0;
-//       baudtick == 1'b0 && count_reg == 'd0 |-> resetn == 1'b0;
-// endproperty
 
-// assert_check_reset: assert property (check_reset)
-//     else $error("Reset has gone low but the program hasn't reset it");
 
 ///////////////////////////////////////////////////////////////////////////
 

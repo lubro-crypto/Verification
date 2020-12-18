@@ -3,7 +3,7 @@
 //                                                                              //
 //Copyright (c) 2012, ARM All rights reserved.                                  //
 //                                                                              //
-//THIS END USER LICENCE AGREEMENT (“LICENCE”) IS A LEGAL AGREEMENT BETWEEN      //
+//THIS END USER LICENCE AGREEMENT (ï¿½LICENCEï¿½) IS A LEGAL AGREEMENT BETWEEN      //
 //YOU AND ARM LIMITED ("ARM") FOR THE USE OF THE SOFTWARE EXAMPLE ACCOMPANYING  //
 //THIS LICENCE. ARM IS ONLY WILLING TO LICENSE THE SOFTWARE EXAMPLE TO YOU ON   //
 //CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS LICENCE. BY INSTALLING OR  //
@@ -36,34 +36,41 @@
 
 
 module UART_TX(
-  input wire clk,
-  input wire resetn,
-  input wire tx_start,        
-  input wire b_tick,          //baud rate tick
-  input wire [7:0] d_in,      //input data
-  output reg tx_done,         //transfer finished
-  output wire tx              //output data to RS-232
+    input wire clk,
+    input wire resetn,
+    input wire tx_start,        
+    input wire b_tick,          //baud rate tick
+    input wire [7:0] d_in,      //input data
+    input wire PARITYSEL,
+    output reg tx_done,         //transfer finished
+    output wire tx              //output data to RS-232
   );
   
   
 //STATE DEFINES  
-  localparam [1:0] idle_st = 2'b00;
-  localparam [1:0] start_st = 2'b01;
-  localparam [1:0] data_st = 2'b11;
-  localparam [1:0] stop_st = 2'b10;
-  
+  localparam [2:0] idle_st = 3'b000;
+  localparam [2:0] start_st = 3'b001;
+  localparam [2:0] data_st = 3'b011;
+  localparam [2:0] parity_st = 3'b010; // new state to allocate parity bit
+  localparam [2:0] stop_st = 3'b110;
 //Internal Signals  
-  reg [1:0] current_state;
-  reg [1:0] next_state;
+  reg [2:0] current_state;
+  reg [2:0] next_state;
   reg [3:0] b_reg;          //baud tick counter
   reg [3:0] b_next;
-  reg [2:0] count_reg;      //data bit counter
+  reg [3:0] count_reg;      //data bit counter - Now counts up to nine
   reg [2:0] count_next;
   reg [7:0] data_reg;       //data register
   reg [7:0] data_next;
   reg tx_reg;               //output data reg
   reg tx_next;
-  
+  wire parity_bit;
+  reg [3:0] count_tick;
+  reg verif_start;
+  reg verif_data;
+  reg verif_parity;
+  reg verif_stop;
+  wire inject_bug = 1'b0;
 //State Machine  
   always @(posedge clk, negedge resetn)
   begin
@@ -88,7 +95,7 @@ module UART_TX(
 
 //Next State Logic  
   always @*
-  begin
+  begin 
     next_state = current_state;
     tx_done = 1'b0;
     b_next = b_reg;
@@ -99,7 +106,8 @@ module UART_TX(
     case(current_state)
       idle_st:
       begin
-        tx_next = 1'b1;
+        count_tick = 0;                                            /////////////////////////////////////////////////////
+        tx_next = !inject_bug;
         if(tx_start)
         begin
           next_state = start_st;
@@ -111,7 +119,8 @@ module UART_TX(
       start_st: //send start bit
       begin
         tx_next = 1'b0;
-        if(b_tick)
+        if(b_tick)begin
+          count_tick = count_tick + 1;                              ///////////////////////////////////////////////////////////
           if(b_reg==15)
             begin
               next_state = data_st;
@@ -120,6 +129,7 @@ module UART_TX(
             end
           else
             b_next = b_reg + 1;
+        end
       end
       
       data_st: //send data serially
@@ -127,23 +137,45 @@ module UART_TX(
         tx_next = data_reg[0];
         
         if(b_tick)
+          begin
+          count_tick = count_tick + 1;                                 ///////////////////////////////////////////////////////////
           if(b_reg == 15)
             begin
               b_next = 0;
               data_next = data_reg >> 1;
               if(count_reg == 7)    //8 data bits
-                next_state = stop_st;
+                next_state = parity_st; //send parity bit
               else
                 count_next = count_reg + 1;
             end
           else
             b_next = b_reg + 1;
+          end
       end
       
+      parity_st:
+        begin
+        tx_next = parity_bit;
+        if(b_tick)
+          begin
+          count_tick = count_tick + 1;                                 //////////////////////////////////////////////////////////////////
+          if(b_reg==15)
+            begin
+              next_state = stop_st;
+              b_next = 0;
+              count_next = 0;
+            end
+          else
+            b_next = b_reg + 1;
+          end
+        end
+
       stop_st: //send stop bit
       begin
         tx_next = 1'b1;
         if(b_tick)
+        begin
+        count_tick = count_tick + 1;                              ///////////////////////////////////////////////////////////////////////////
           if(b_reg == 15)   //one stop bit
             begin
               next_state = idle_st;
@@ -151,10 +183,45 @@ module UART_TX(
             end
           else
             b_next = b_reg + 1;
+        end
       end
     endcase
   end
   
-  assign tx = tx_reg;
-  
+assign tx = tx_reg;
+// If 1 then Odd Parity
+// If 0 then Even Parity
+always @(posedge clk)
+begin
+    verif_start <= (current_state == start_st) && (tx_next == 0);
+    verif_data <= (current_state == data_st) && (tx_next == data_reg[0]);
+    verif_parity <=  (current_state == parity_st)  && (tx_next == parity_bit) ;
+    verif_stop <= (current_state == stop_st) && (tx_next == 1) ;
+end
+//check behaviour
+property check_tx;
+  @(posedge clk)
+    ( (current_state == idle_st && tx_next == 1)  || (current_state == start_st && tx_next == 0) ||(current_state == data_st && tx_next == data_reg[0]) ||(current_state == parity_st  && tx_next == parity_bit) || (current_state == stop_st && tx_next == 1) ) == 1
+
+endproperty
+assert_check_tx: assert property (check_tx)
+  else $error ("Error: incorrect tx sequence");
+
+
+parity_generator gen1(.data_in(d_in),
+.PARITYSEL(PARITYSEL), 
+.data_output(parity_bit) );
+
 endmodule
+
+
+
+  //   if (count_tick == 1) 
+  //     tx_next == 0; //start bit
+  //   else if (1 < count_tick < 10 )
+  //     tx_next == data_reg[0]; //data bit
+  //   else if (count_tick == 10 ) 
+  //     tx_next == parity_bit; //parity bit
+  //   else if (count_tick == 11)
+  //     tx_next == 1; //stop bit
+  // end

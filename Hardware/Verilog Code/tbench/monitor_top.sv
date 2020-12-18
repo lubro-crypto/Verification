@@ -1,7 +1,8 @@
-`include "uart_tx.sv"
-`include "baudgen.sv"
-`include "uart_rx.sv"
-`include "parity_checker.sv"
+`include "models/uart_tx_model.sv"
+`include "models/baudgen_model.sv"
+`include "models/uart_rx_model.sv"
+`include "models/parity_checker_model.sv"
+
 
 class input_generator;
 

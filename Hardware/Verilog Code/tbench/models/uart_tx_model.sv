@@ -1,4 +1,4 @@
-`include "Parity_Generator.sv"
+`include "parity_gen_model.sv"
 
 class uart_tx_model;
 
