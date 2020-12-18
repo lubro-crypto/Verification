@@ -11,13 +11,30 @@ interface Baud_if(input bit clk);
 endinterface
 
 class input_generator;
-	randc [3:0] 
+	randc logic [3:0] set_baud;
+	constraint c {
+		set_baud >= 'd0;
+		set_baud < 'd14;
+	}
 endclass
 
 module Baud_tb( Baud_if.TB baudif);
-	covergroup
+	covergroup cover_inputs {
+		slow = ['d0:'d5];
+		fast = ['d6:'d14];
+	}
+	endgroup
 
 	initial begin
+		fork
+			begin
+				forever begin
+					@(posedge clk)begin
+						
+					end
+				end
+			end
+		join_none
 		baudif.reset_in <= 1'b0;
 		#30 baudif.reset_in <= 1'b1;
 		for(int i = 0 ; i < 14 ; i++)begin

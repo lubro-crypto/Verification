@@ -1,0 +1,77 @@
+2020-12-18 13:33:54.329267 (100101) main____ INFO    ----------------------------------------
+2020-12-18 13:33:54.329419 (100101) main____ INFO    JasperGold version info
+2020-12-18 13:33:54.329439 (100101) main____ INFO      tool      : JasperGold 2018.06
+2020-12-18 13:33:54.329457 (100101) main____ INFO      version   : 2018.06p002 64 bits
+2020-12-18 13:33:54.329471 (100101) main____ INFO      build date: 2018.08.27 18:04:53 PDT
+2020-12-18 13:33:54.329480 (100101) main____ INFO    ----------------------------------------
+2020-12-18 13:33:54.329488 (100101) main____ INFO    Runtime info:
+2020-12-18 13:33:54.329499 (100101) main____ INFO      platform  : Linux 3.10.0-957.21.3.el7.x86_64 x86_64
+2020-12-18 13:33:54.329513 (100101) main____ INFO      hostname  : ee-mill3.ee.ic.ac.uk
+2020-12-18 13:33:54.329522 (100101) main____ INFO      pid       : 100101
+2020-12-18 13:33:54.329531 (100101) main____ INFO      arguments : '-style' 'windows' 'baudgen.tcl'
+2020-12-18 13:33:54.329539 (100101) main____ INFO    ----------------------------------------
+2020-12-18 13:33:54.329547 (100101) main____ INFO    System resource limits info:
+2020-12-18 13:33:54.329556 (100101) main____ INFO      virtual memory: unlimited
+2020-12-18 13:33:54.329565 (100101) main____ INFO      cpu time      : unlimited
+2020-12-18 13:33:54.329593 (100101) main____ INFO      stack size    : 8388608 B
+2020-12-18 13:33:54.329606 (100101) main____ INFO      core file size: 0 B
+2020-12-18 13:33:54.329625 (100101) main____ INFO      open files    : 1024
+2020-12-18 13:33:54.329653 (100101) main____ INFO      file size     : unlimited
+2020-12-18 13:33:54.329661 (100101) main____ INFO    ----------------------------------------
+2020-12-18 13:33:54.329668 (100101) main____ INFO    Memory statistics:
+2020-12-18 13:33:54.329677 (100101) main____ INFO      total physical memory  : 395962436 kB
+2020-12-18 13:33:54.329684 (100101) main____ INFO      free physical memory   : 195720356 kB
+2020-12-18 13:33:54.329692 (100101) main____ INFO      committed address space: 13448420 kB
+2020-12-18 13:33:54.329700 (100101) main____ INFO    ----------------------------------------
+2020-12-18 13:33:54.329760 (100101) main____ INFO    Important environment variables:
+2020-12-18 13:33:54.329779 (100101) main____ INFO      DISPLAY        : 'localhost:25.0'
+2020-12-18 13:33:54.329793 (100101) main____ INFO      LM_LICENSE_FILE: '5280@ee-llic01.ee.ic.ac.uk'
+2020-12-18 13:33:54.329801 (100101) main____ INFO    ----------------------------------------
+2020-12-18 13:33:54.330496 (100101) lic_core INFO    Initializing license system ...
+2020-12-18 13:33:54.331757 (100101) lic_core INFO    ... license system initialized.
+2020-12-18 13:33:54.334333 (100101) lic__man INFO    Claim 'main' for <ui>.
+2020-12-18 13:33:54.334415 (100101) lic_core INFO    (1) checking out 'jasper_interactive' ...
+2020-12-18 13:33:54.347294 (100101) lic_core INFO    ... (1) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2020-12-18 13:33:54.347324 (100101) lic_core INFO    (2) checking out 'jasper_pint' ...
+2020-12-18 13:33:54.386472 (100101) lic_core INFO    ... (2) checkout succeeded
+2020-12-18 13:33:54.386571 (100101) lic__man INFO    Claim 'fpv' for <ui>.
+2020-12-18 13:33:54.386617 (100101) lic_core INFO    (3) checking out 'jasper_fpv' ...
+2020-12-18 13:33:54.397122 (100101) lic_core INFO    ... (3) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2020-12-18 13:33:54.397164 (100101) lic_core INFO    (4) checking out 'jasper_fao' ...
+2020-12-18 13:33:54.422459 (100101) lic_core INFO    ... (4) checkout succeeded
+2020-12-18 13:34:00.718284 (100101) lic__man INFO    Claim 'fpv' for <ui>.
+2020-12-18 13:34:01.366965 (100101) lic__man INFO    Unclaim 'fpv' for <ui>.
+2020-12-18 13:34:01.367010 (100101) lic__man INFO    Claim 'fpv' for <ui>.
+2020-12-18 13:34:01.378828 (100101) session_ INFO    Starting analysis session with session id 'session_0' ...
+2020-12-18 13:34:01.380831 (100101) session_ INFO    Analysis session with session id 'session_0' started (pid: 100461)
+2020-12-18 13:34:07.560163 (100101) session_ INFO    Analysis session 'session_0' connected to the console (host: 146.179.44.6:50772)
+2020-12-18 13:34:09.264758 (100101) lic__man INFO    Unclaim everything for 'session_0'.
+2020-12-18 13:34:09.301431 (100101) lic__man INFO    Unclaim everything for 'session_0'.
+2020-12-18 13:35:48.631905 (100101) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-12-18 13:36:31.553476 (100101) lic__man INFO    Claim 'fpv' for 'session_0/prove-1'.
+2020-12-18 13:36:31.553607 (100101) lic_core INFO    (5) checking out 'jasper_fpv' ...
+2020-12-18 13:36:31.566216 (100101) lic_core INFO    ... (5) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2020-12-18 13:36:31.566255 (100101) lic_core INFO    (6) checking out 'jasper_fao' ...
+2020-12-18 13:36:31.593861 (100101) lic_core INFO    ... (6) checkout succeeded
+2020-12-18 13:37:50.065714 (100101) lic__man INFO    Claim 'fpv' for 'session_0'.
+2020-12-18 13:37:50.180574 (100101) lic__man INFO    Claim 'fpv' for 'session_0/prove-2'.
+2020-12-18 13:37:50.180683 (100101) lic_core INFO    (7) checking out 'jasper_fpv' ...
+2020-12-18 13:37:50.192357 (100101) lic_core INFO    ... (7) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2020-12-18 13:37:50.192412 (100101) lic_core INFO    (8) checking out 'jasper_fao' ...
+2020-12-18 13:37:50.221546 (100101) lic_core INFO    ... (8) checkout succeeded
+2020-12-18 13:37:51.305559 (100101) lic__man INFO    Claim 'fpv' for 'session_0/prove-3'.
+2020-12-18 13:37:51.305677 (100101) lic_core INFO    (9) checking out 'jasper_fpv' ...
+2020-12-18 13:37:51.316211 (100101) lic_core INFO    ... (9) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2020-12-18 13:37:51.316263 (100101) lic_core INFO    (10) checking out 'jasper_fao' ...
+2020-12-18 13:37:51.344239 (100101) lic_core INFO    ... (10) checkout succeeded
+2020-12-18 13:38:55.588766 (100101) lic__man INFO    Claim 'fpv' for 'session_0/prove-4'.
+2020-12-18 13:38:55.588859 (100101) lic_core INFO    (11) checking out 'jasper_fpv' ...
+2020-12-18 13:38:55.601437 (100101) lic_core INFO    ... (11) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2020-12-18 13:38:55.601510 (100101) lic_core INFO    (12) checking out 'jasper_fao' ...
+2020-12-18 13:38:55.627205 (100101) lic_core INFO    ... (12) checkout succeeded
+2020-12-18 13:39:02.432099 (100101) lic__man INFO    Unclaim everything for 'session_0/prove-4'.
+2020-12-18 13:39:02.434139 (100101) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-12-18 13:39:02.727191 (100101) lic__man INFO    Unclaim everything for 'session_0/prove-1'.
+2020-12-18 13:40:23.711660 (100101) main____ INFO    About to exit: requested from GUI
+2020-12-18 13:40:24.002744 (100101) session_ INFO    Analysis session 'session_0' disconnected.
+2020-12-18 13:40:24.007111 (100101) main____ INFO    Exiting with status 0.

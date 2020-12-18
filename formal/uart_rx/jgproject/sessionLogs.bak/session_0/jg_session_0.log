@@ -1,0 +1,275 @@
+#----------------------------------------
+# JasperGold Version Info
+# tool      : JasperGold 2018.06
+# platform  : Linux 3.10.0-957.21.3.el7.x86_64
+# version   : 2018.06p002 64 bits
+# build date: 2018.08.27 18:04:53 PDT
+#----------------------------------------
+# started Fri Dec 18 14:54:53 GMT 2020
+# hostname  : ee-mill3.ee.ic.ac.uk
+# pid       : 58340
+# arguments : '-label' 'session_0' '-console' 'ee-mill3.ee.ic.ac.uk:46723' '-style' 'windows' '-data' 'AQAAADx/////AAAAAAAAA3oBAAAAEABMAE0AUgBFAE0ATwBWAEU=' '-proj' '/home/tms4517/nfshome/JasperGold/uart_rx/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/tms4517/nfshome/JasperGold/uart_rx/jgproject/.tmp/.initCmds.tcl' 'uart_rx.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2018 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc. 
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+JasperGold Apps Analysis Session - /home/tms4517/nfshome/JasperGold/uart_rx/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_pint" and "jasper_fao".
+INFO: reading configuration file "/home/tms4517/.config/jasper/jaspergold.conf".
+% # Script for multiplier example in JasperGold
+% clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% analyze -clear
+% #analyze -sv parity_gen.sv
+% analyze -sv uart_rx.sv
+[-- (VERI-1482)] Analyzing Verilog file '/usr/local/cadence/JASPER_2018.06.002/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file 'uart_rx.sv'
+% #elaborate -bbox_mul 64 -top parity_generator
+% elaborate -bbox_mul 64 -top UART_RX
+INFO (ISW003): Top module name is "UART_RX".
+[INFO (VERI-1018)] uart_rx.sv(38): compiling module 'UART_RX'
+[WARN (VERI-1209)] uart_rx.sv(136): expression size 32 truncated to fit in target size 4
+[WARN (VERI-1209)] uart_rx.sv(149): expression size 32 truncated to fit in target size 4
+UART_RX
+[<embedded>] % 
+[<embedded>] % # Setup global clocks and resets
+[<embedded>] % clock clk
+[<embedded>] % #reset -expression !(rst_n)
+[<embedded>] % reset -expression !(resetn)
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "resetn".
+[<embedded>] % 
+[<embedded>] % # Setup task
+[<embedded>] % task -set <embedded>
+<embedded>
+[<embedded>] % set_proofgrid_max_jobs 4
+[<embedded>] % set_proofgrid_max_local_jobs 4
+[<embedded>] % 
+[<embedded>] % #cover -name test_cover_from_tcl {@(posedge clk) disable iff (!rst_n) done && ab == 10'd35}
+[<embedded>] % prove -bg -all
+INFO (IPF036): Starting proof on task: "<embedded>", 6 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 3 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 2 iterations. Assigned values for 19 of 19 design flops, 1 of 1 design latches, 6 of 6 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    proofgrid_max_jobs            = 4
+    max engine jobs               = auto (max 4)
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.001s
+0.0.PRE: Performing Proof Simplification...
+0.0.N: clocks: 3, declared: 1, disabling: 0, posedge: 3, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: Proof Simplification Iteration 1	[0.00 s]
+0.0.N: Proof Simplification Iteration 2	[0.00 s]
+0.0.N: Proof Simplification Iteration 3	[0.00 s]
+0.0.PRE: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+0.0.PRE: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.PRE: The property ":noConflict" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+0.0.PRE: Proof Simplification completed in 0.01 s
+0: About to start centralized ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 4
+0: ProofGrid is starting event handling
+0: ProofGrid usable level: 3
+background 0
+0.0.Hp: Proofgrid shell started at 59410@ee-mill3.ee.ic.ac.uk(local) jg_58340_ee-mill3.ee.ic.ac.uk_1
+0: ProofGrid usable level: 2
+0.0.N: Proofgrid shell started at 59409@ee-mill3.ee.ic.ac.uk(local) jg_58340_ee-mill3.ee.ic.ac.uk_1
+0: ProofGrid usable level: 1
+0.0.Hp: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.N: Starting proof for property "UART_RX.assert_check_rx_1"	[0.00 s].
+0.0.Hp: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.Hp: The property "UART_RX.assert_check_rx_1" was proven in 0.00 s.
+0.0.N: Trace Attempt  1	[0.00 s]
+0.0.Hp: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.Hp: The property "UART_RX.assert_check_rx_2" was proven in 0.00 s.
+0.0.Hp: Trace Attempt  1	[0.00 s]
+0.0.Hp: A trace with 1 cycles was found. [0.00 s]
+INFO (IPF047): 0.0.Hp: The cover property "UART_RX.assert_check_rx_1:precondition1" was covered in 1 cycles in 0.03 s.
+0.0.N: Trace Attempt  2	[0.00 s]
+0.0.N: Stopped processing property "UART_RX.assert_check_rx_1"	[0.03 s].
+0.0.N: Starting proof for property "UART_RX.assert_check_rx_2:precondition1"	[0.00 s].
+0.0.N: Trace Attempt  1	[0.00 s]
+0.0.N: Trace Attempt  2	[0.00 s]
+0.0.N: Trace Attempt  3	[0.00 s]
+0.0.Hp: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.Hp: The property "UART_RX.assert_check_rx_3" was proven in 0.03 s.
+0.0.Hp: Trace Attempt  2	[0.00 s]
+0.0.N: Trace Attempt  3	[0.00 s]
+0.0.N: Trace Attempt  4	[0.00 s]
+0.0.N: Trace Attempt  4	[0.00 s]
+0.0.Hp: Trace Attempt  3	[0.01 s]
+0.0.N: Trace Attempt  5	[0.00 s]
+0.0.Hp: Trace Attempt  4	[0.01 s]
+0.0.Hp: Trace Attempt  5	[0.01 s]
+0.0.N: Trace Attempt  1	[0.01 s]
+0.0.N: Trace Attempt  2	[0.01 s]
+0.0.N: Trace Attempt  3	[0.01 s]
+0.0.N: Trace Attempt  5	[0.01 s]
+0.0.Ht: Proofgrid shell started at 59424@ee-mill3.ee.ic.ac.uk(local) jg_58340_ee-mill3.ee.ic.ac.uk_1
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0.00 s]
+0.0.Ht: Trace Attempt  2	[0.00 s]
+0.0.Ht: Trace Attempt  3	[0.00 s]
+0.0.Ht: Trace Attempt  4	[0.00 s]
+0.0.Ht: Trace Attempt  5	[0.00 s]
+0.0.B: Proofgrid shell started at 59425@ee-mill3.ee.ic.ac.uk(local) jg_58340_ee-mill3.ee.ic.ac.uk_1
+0.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.B: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.B: Starting proof for property "UART_RX.assert_check_rx_2:precondition1"	[0.00 s].
+0.0.B: Trace Attempt  1	[0.00 s]
+0.0.B: Trace Attempt  2	[0.00 s]
+0.0.B: Trace Attempt  3	[0.00 s]
+0.0.B: Trace Attempt  4	[0.00 s]
+0.0.B: Trace Attempt  5	[0.00 s]
+0.0.Ht: Trace Attempt 18	[0.00 s]
+0.0.Ht: A trace with 18 cycles was found. [0.01 s]
+INFO (IPF047): 0.0.Ht: The cover property "UART_RX.assert_check_rx_2:precondition1" was covered in 18 cycles in 0.00 s.
+0.0.Ht: Trace Attempt 19	[0.01 s]
+0.0.N: Stopped processing property "UART_RX.assert_check_rx_2:precondition1"	[0.00 s].
+0.0.N: Last scan. Per property time limit: 0s
+0.0.N: Starting proof for property "UART_RX.assert_check_rx_3:precondition1"	[0.00 s].
+0.0.N: Trace Attempt  1	[0.00 s]
+0.0.B: Stopped processing property "UART_RX.assert_check_rx_2:precondition1"	[0.00 s].
+0.0.B: Last scan. Per property time limit: 0s
+0.0.B: Starting proof for property "UART_RX.assert_check_rx_3:precondition1"	[0.00 s].
+0.0.N: Trace Attempt  2	[0.00 s]
+0.0.N: Trace Attempt  3	[0.00 s]
+0.0.B: Trace Attempt  1	[0.00 s]
+0.0.N: Trace Attempt  3	[0.00 s]
+0.0.B: Trace Attempt  2	[0.00 s]
+0.0.B: Trace Attempt  3	[0.00 s]
+0.0.N: Trace Attempt  4	[0.00 s]
+0.0.B: Trace Attempt  4	[0.00 s]
+0.0.N: Trace Attempt  4	[0.00 s]
+0.0.B: Trace Attempt  5	[0.00 s]
+0.0.N: Trace Attempt  5	[0.00 s]
+0.0.N: Trace Attempt  5	[0.00 s]
+0.0.N: Trace Attempt  1	[0.02 s]
+0.0.N: Trace Attempt  2	[0.02 s]
+0.0.N: Trace Attempt  3	[0.02 s]
+0.0.N: Trace Attempt  5	[0.02 s]
+0.0.N: Trace Attempt  1	[0.32 s]
+0.0.N: Trace Attempt  2	[0.32 s]
+0.0.N: Trace Attempt  3	[0.33 s]
+0.0.N: Trace Attempt  5	[0.33 s]
+0: ProofGrid usable level: 1
+0.0.N: Requesting engine job to stop
+0.0.B: Requesting engine job to stop
+0.0.Hp: Requesting engine job to terminate
+0.0.Ht: Requesting engine job to terminate
+INFO (IPF144): 0: Initiating shutdown of proof [1.18]
+0.0.B: Trace Attempt 177	[1.14 s]
+0.0.B: A trace with 177 cycles was found. [1.15 s]
+INFO (IPF047): 0.0.B: The cover property "UART_RX.assert_check_rx_3:precondition1" was covered in 177 cycles in 1.14 s.
+0.0.B: Stopped processing property "UART_RX.assert_check_rx_3:precondition1"	[1.14 s].
+0.0.B: All properties determined. [1.15 s]
+0.0.Ht: Interrupted (multi)
+0.0.Hp: Interrupted (multi)
+0.0.Ht: Trace Attempt 155	[1.13 s]
+0.0.Ht: All properties determined. [1.15 s]
+0.0.Hp: Trace Attempt  8	[0.02 s]
+0.0.Hp: All properties determined. [1.18 s]
+0.0.B: Exited with Success (@ 1.18 s)
+0: ProofGrid usable level: 0
+0.0.Hp: Exited with Success (@ 1.18 s)
+0.0.Ht: Exited with Success (@ 1.18 s)
+0.0.N: Stopped processing property "UART_RX.assert_check_rx_3:precondition1"	[1.14 s].
+0.0.N: Trace Attempt 159	[0.75 s]
+0.0.N: All properties determined. [1.18 s]
+0.0.N: Exited with Success (@ 1.18 s)
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :   4
+     engine jobs started                           :   4
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      N        0.03        1.18        0.00       97.19 %
+     Hp        0.03        1.18        0.00       97.70 %
+     Ht        0.02        1.15        0.00       98.03 %
+      B        0.02        1.15        0.00       97.94 %
+    all        0.03        1.17        0.00       97.71 %
+
+    Data read    : 45.81 kiB
+    Data written : 8.01 kiB
+
+0: ProofGrid usable level: 0
+0: All pending notifications were processed.
+INFO (IPF059): Completed proof on task: "<embedded>"
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 6
+                 assertions                   : 3
+                  - proven                    : 3 (100%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 3
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 3 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+INFO (IPL005): Received request to exit from the console.
+INFO: Waiting for proof threads to stop...
+INFO: Proof threads stopped.

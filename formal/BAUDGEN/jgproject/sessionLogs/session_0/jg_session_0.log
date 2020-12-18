@@ -1,0 +1,1274 @@
+#----------------------------------------
+# JasperGold Version Info
+# tool      : JasperGold 2018.06
+# platform  : Linux 3.10.0-957.21.3.el7.x86_64
+# version   : 2018.06p002 64 bits
+# build date: 2018.08.27 18:04:53 PDT
+#----------------------------------------
+# started Fri Dec 18 13:34:01 GMT 2020
+# hostname  : ee-mill3.ee.ic.ac.uk
+# pid       : 100461
+# arguments : '-label' 'session_0' '-console' 'ee-mill3.ee.ic.ac.uk:42960' '-style' 'windows' '-data' 'AQAAADx/////AAAAAAAAA3oBAAAAEABMAE0AUgBFAE0ATwBWAEU=' '-proj' '/home/tms4517/nfshome/JasperGold/BAUDGEN/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/tms4517/nfshome/JasperGold/BAUDGEN/jgproject/.tmp/.initCmds.tcl' 'baudgen.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2018 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc. 
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+JasperGold Apps Analysis Session - /home/tms4517/nfshome/JasperGold/BAUDGEN/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_pint" and "jasper_fao".
+INFO: reading configuration file "/home/tms4517/.config/jasper/jaspergold.conf".
+% # Script for multiplier example in JasperGold
+% clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% analyze -clear
+% #analyze -sv parity_gen.sv
+% analyze -sv baudgen.sv
+[-- (VERI-1482)] Analyzing Verilog file '/usr/local/cadence/JASPER_2018.06.002/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file 'baudgen.sv'
+% #elaborate -bbox_mul 64 -top parity_generator
+% elaborate -bbox_mul 64 -top BAUDGEN
+INFO (ISW003): Top module name is "BAUDGEN".
+[INFO (VERI-1018)] baudgen.sv(37): compiling module 'BAUDGEN'
+[WARN (VERI-1060)] baudgen.sv(59): 'initial' construct ignored
+[WARN (VERI-1209)] baudgen.sv(76): expression size 32 truncated to fit in target size 4
+[WARN (VERI-1209)] baudgen.sv(78): expression size 256 truncated to fit in target size 19
+[WARN (VERI-1209)] baudgen.sv(80): expression size 32 truncated to fit in target size 19
+[WARN (VERI-1209)] baudgen.sv(112): expression size 32 truncated to fit in target size 19
+BAUDGEN
+[<embedded>] % 
+[<embedded>] % # Setup global clocks and resets
+[<embedded>] % clock clk
+[<embedded>] % #reset -expression !(rst_n)
+[<embedded>] % reset -expression !(resetn)
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "resetn".
+[<embedded>] % 
+[<embedded>] % # Setup task
+[<embedded>] % task -set <embedded>
+<embedded>
+[<embedded>] % set_proofgrid_max_jobs 4
+[<embedded>] % set_proofgrid_max_local_jobs 4
+[<embedded>] % 
+[<embedded>] % #cover -name test_cover_from_tcl {@(posedge clk) disable iff (!rst_n) done && ab == 10'd35}
+[<embedded>] % prove -bg -all
+background 0
+INFO (IPF036): Starting proof on task: "<embedded>", 3 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 3 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 2 iterations. Assigned values for 38 of 38 design flops, 0 of 0 design latches, 3 of 3 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    proofgrid_max_jobs            = 4
+    max engine jobs               = auto (max 4)
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+0.0.PRE: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.PRE: The property "BAUDGEN.assert_check_count_reg" was proven in 0.00 s.
+0: Found proofs for 1 properties in preprocessing
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.001s
+0.0.PRE: Performing Proof Simplification...
+0.0.N: clocks: 2, declared: 1, disabling: 0, posedge: 2, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: Proof Simplification Iteration 1	[0.00 s]
+0.0.N: Proof Simplification Iteration 2	[0.00 s]
+0.0.PRE: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+0.0.PRE: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 0.0.PRE: The property ":noConflict" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+0.0.PRE: Proof Simplification completed in 0.00 s
+0: About to start centralized ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 2
+0: ProofGrid is starting event handling
+0.0.Hp: Proofgrid shell started at 103336@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_1
+0.0.N: Proofgrid shell started at 103335@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_1
+0: ProofGrid usable level: 1
+0.0.Hp: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.N: Starting proof for property "BAUDGEN.assert_check_count_reg:precondition1"	[0.00 s].
+0.0.N: Trace Attempt  1	[0.00 s]
+0.0.N: A trace with 1 cycles was found. [0.00 s]
+INFO (IPF047): 0.0.N: The cover property "BAUDGEN.assert_check_count_reg:precondition1" was covered in 1 cycles in 0.02 s.
+0.0.N: Stopped processing property "BAUDGEN.assert_check_count_reg:precondition1"	[0.02 s].
+0.0.N: Last scan. Per property time limit: 0s
+0.0.N: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.Hp: Trace Attempt  1	[0.00 s]
+0.0.N: Trace Attempt  1	[0.00 s]
+0.0.Hp: Trace Attempt  2	[0.00 s]
+0.0.N: Trace Attempt  2	[0.00 s]
+0.0.Hp: Trace Attempt  3	[0.01 s]
+0.0.N: Trace Attempt  2	[0.00 s]
+0.0.Hp: Trace Attempt  4	[0.01 s]
+0.0.Hp: Trace Attempt  5	[0.01 s]
+0.0.N: Trace Attempt  3	[0.01 s]
+0.0.N: Trace Attempt  4	[0.01 s]
+0.0.N: Trace Attempt  5	[0.01 s]
+0.0.N: Trace Attempt  1	[0.01 s]
+0.0.N: Trace Attempt  2	[0.01 s]
+0.0.N: Trace Attempt  3	[0.02 s]
+0.0.Ht: Proofgrid shell started at 103349@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_1
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.B: Proofgrid shell started at 103350@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_1
+0.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0.00 s]
+0.0.B: Last scan. Per property time limit: 0s
+0.0.B: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.Ht: Trace Attempt  2	[0.00 s]
+0.0.Ht: Trace Attempt  3	[0.00 s]
+0.0.Ht: Trace Attempt  4	[0.00 s]
+0.0.Ht: Trace Attempt  5	[0.00 s]
+0.0.B: Trace Attempt  1	[0.00 s]
+0.0.N: Trace Attempt  5	[0.02 s]
+0.0.B: Trace Attempt  2	[0.00 s]
+0.0.B: Trace Attempt  3	[0.01 s]
+0.0.B: Trace Attempt  4	[0.01 s]
+0.0.B: Trace Attempt  5	[0.01 s]
+0: ProofGrid usable level: 1
+0.0.Ht: Trace Attempt 24,419	[4.00 s]
+0.0.B: Trace Attempt 279	[4.02 s]
+0.0.N: Trace Attempt 366	[4.13 s]
+0.0.Ht: Trace Attempt 46,435	[8.00 s]
+0.0.B: Trace Attempt 393	[8.04 s]
+0.0.N: Trace Attempt 622	[8.24 s]
+0.0.Ht: Trace Attempt 68,991	[12.00 s]
+0.0.B: Trace Attempt 483	[12.05 s]
+0.0.N: Trace Attempt 779	[12.37 s]
+0.0.Ht: Trace Attempt 90,238	[16.00 s]
+0.0.B: Trace Attempt 570	[16.09 s]
+0.0.N: Trace Attempt 806	[17.44 s]
+0.0.B: Trace Attempt 645	[20.13 s]
+0.0.Ht: Trace Attempt 119,847	[20.19 s]
+0.0.N: Trace Attempt 838	[22.18 s]
+0.0.B: Trace Attempt 696	[24.16 s]
+0.0.Ht: Trace Attempt 136,671	[24.19 s]
+0.0.N: Trace Attempt 863	[27.76 s]
+0.0.Ht: Trace Attempt 167,026	[28.19 s]
+0.0.B: Trace Attempt 755	[28.20 s]
+0.0.N: Trace Attempt 907	[31.83 s]
+0.0.B: Trace Attempt 809	[32.22 s]
+0.0.Ht: Trace Attempt 177,537	[32.23 s]
+0.0.N: Trace Attempt 929	[35.84 s]
+0.0.Ht: Trace Attempt 207,836	[36.23 s]
+0.0.B: Trace Attempt 862	[36.30 s]
+0.0.Ht: Trace Attempt 237,432	[40.23 s]
+0.0.B: Trace Attempt 907	[40.31 s]
+0.0.N: Trace Attempt 976	[40.78 s]
+[<embedded>] % prove -bg -task {<embedded>}
+INFO (IPF036): Starting proof on task: "<embedded>", 1 properties to prove with 1 already proven/unreachable
+background 1
+INFO (IPF031): Settings used for proof thread 1:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    proofgrid_max_jobs            = 4
+    max engine jobs               = auto (max 4)
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+1: Using multistage preprocessing
+1: Starting reduce
+1: Finished reduce in 0.001s
+1.0.PRE: Performing Proof Simplification...
+1.0.N: clocks: 2, declared: 1, disabling: 0, posedge: 2, negedge: 0, noedge: 0, bothedge: 0
+1.0.N: Proof Simplification Iteration 1	[0.00 s]
+1.0.N: Proof Simplification Iteration 2	[0.00 s]
+1.0.PRE: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 1.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+1.0.PRE: Proof Simplification completed in 0.01 s
+1: About to start centralized ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+1: =============================== ProofGrid start ===============================
+1: ProofGrid usable level: 1
+1: ProofGrid is starting event handling
+1.0.Hp: Proofgrid shell started at 104464@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_2
+1.0.N: Proofgrid shell started at 104463@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_2
+1.0.Hp: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+1.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+1.0.N: Last scan. Per property time limit: 0s
+1.0.N: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+1.0.N: Trace Attempt  1	[0.00 s]
+1.0.N: Trace Attempt  2	[0.00 s]
+1.0.N: Trace Attempt  2	[0.00 s]
+1.0.Hp: Trace Attempt  1	[0.00 s]
+1.0.N: Trace Attempt  3	[0.00 s]
+1.0.N: Trace Attempt  4	[0.00 s]
+1.0.N: Trace Attempt  5	[0.00 s]
+1.0.Hp: Trace Attempt  2	[0.00 s]
+1.0.Hp: Trace Attempt  3	[0.01 s]
+1.0.Hp: Trace Attempt  4	[0.01 s]
+1.0.N: Trace Attempt  1	[0.01 s]
+1.0.N: Trace Attempt  2	[0.01 s]
+1.0.Hp: Trace Attempt  5	[0.01 s]
+1.0.N: Trace Attempt  3	[0.01 s]
+1.0.N: Trace Attempt  5	[0.01 s]
+1.0.B: Proofgrid shell started at 104478@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_2
+1.0.Ht: Proofgrid shell started at 104477@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_2
+1.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+1.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+1.0.B: Last scan. Per property time limit: 0s
+1.0.B: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+1.0.B: Trace Attempt  1	[0.00 s]
+1.0.Ht: Trace Attempt  1	[0.00 s]
+1.0.Ht: Trace Attempt  2	[0.00 s]
+1.0.Ht: Trace Attempt  3	[0.00 s]
+1.0.Ht: Trace Attempt  4	[0.00 s]
+1.0.B: Trace Attempt  2	[0.00 s]
+1.0.Ht: Trace Attempt  5	[0.00 s]
+1.0.B: Trace Attempt  3	[0.01 s]
+1.0.B: Trace Attempt  4	[0.01 s]
+1.0.B: Trace Attempt  5	[0.01 s]
+0.0.B: Trace Attempt 949	[44.38 s]
+0.0.Ht: Trace Attempt 250,409	[46.36 s]
+1.0.Ht: Trace Attempt 253	[4.01 s]
+1.0.B: Trace Attempt 274	[4.01 s]
+1.0.Hp: Trace Attempt 182	[4.05 s]
+0.0.N: Trace Attempt 986	[47.03 s]
+1.0.N: Trace Attempt 366	[4.22 s]
+0.0.B: Trace Attempt 987	[48.46 s]
+0.0.Ht: Trace Attempt 281,162	[50.36 s]
+1.0.Hp: Trace Attempt 258	[8.05 s]
+1.0.B: Trace Attempt 380	[8.03 s]
+1.0.Ht: Trace Attempt 349	[8.04 s]
+0.0.N: Trace Attempt 1,052	[51.05 s]
+1.0.N: Trace Attempt 622	[8.29 s]
+0.0.B: Trace Attempt 1,023	[52.50 s]
+0.0.Ht: Trace Attempt 310,913	[54.36 s]
+1.0.Ht: Trace Attempt 432	[12.05 s]
+1.0.B: Trace Attempt 462	[12.06 s]
+1.0.Hp: Trace Attempt 308	[12.10 s]
+0.0.N: Trace Attempt 1,102	[55.12 s]
+1.0.N: Trace Attempt 779	[12.33 s]
+0.0.B: Trace Attempt 1,057	[56.61 s]
+0.0.Ht: Trace Attempt 340,292	[58.36 s]
+1.0.Ht: Trace Attempt 511	[16.07 s]
+1.0.B: Trace Attempt 539	[16.14 s]
+1.0.Hp: Trace Attempt 356	[16.22 s]
+1.0.N: Trace Attempt 806	[17.42 s]
+0.0.B: Trace Attempt 1,088	[60.75 s]
+0.0.N: Trace Attempt 1,114	[61.43 s]
+1.0.Ht: Trace Attempt 567	[20.08 s]
+1.0.B: Trace Attempt 594	[20.16 s]
+1.0.Hp: Trace Attempt 396	[20.28 s]
+0.0.B: Trace Attempt 1,120	[64.84 s]
+1.0.N: Trace Attempt 838	[22.16 s]
+0.0.Ht: Trace Attempt 355,073	[65.78 s]
+1.0.Ht: Trace Attempt 613	[24.10 s]
+0.0.N: Trace Attempt 1,116	[67.18 s]
+1.0.B: Trace Attempt 642	[24.29 s]
+1.0.Hp: Trace Attempt 436	[24.36 s]
+0.0.B: Trace Attempt 1,153	[68.88 s]
+0.0.Ht: Trace Attempt 385,090	[69.78 s]
+1.0.N: Trace Attempt 863	[27.66 s]
+1.0.Ht: Trace Attempt 655	[28.18 s]
+0.0.N: Trace Attempt 1,243	[71.25 s]
+1.0.B: Trace Attempt 681	[28.34 s]
+1.0.Hp: Trace Attempt 477	[28.44 s]
+0.0.B: Trace Attempt 1,179	[72.89 s]
+0.0.Ht: Trace Attempt 414,772	[73.78 s]
+1.0.N: Trace Attempt 907	[31.80 s]
+1.0.Ht: Trace Attempt 687	[32.28 s]
+1.0.B: Trace Attempt 720	[32.35 s]
+1.0.Hp: Trace Attempt 513	[32.50 s]
+0.0.B: Trace Attempt 1,205	[76.93 s]
+0.0.Ht: Trace Attempt 443,874	[77.78 s]
+0.0.N: Trace Attempt 1,289	[78.50 s]
+1.0.N: Trace Attempt 933	[35.80 s]
+1.0.Ht: Trace Attempt 723	[36.35 s]
+1.0.B: Trace Attempt 766	[36.38 s]
+1.0.Hp: Trace Attempt 545	[36.57 s]
+0.0.B: Trace Attempt 1,233	[81.00 s]
+0.0.Ht: Trace Attempt 472,367	[81.78 s]
+0.0.N: Trace Attempt 1,397	[82.54 s]
+1.0.Ht: Trace Attempt 757	[40.40 s]
+1.0.B: Trace Attempt 806	[40.49 s]
+1.0.N: Trace Attempt 976	[40.58 s]
+1.0.Hp: Trace Attempt 573	[40.71 s]
+0.0.B: Trace Attempt 1,263	[85.15 s]
+0.0.Ht: Trace Attempt 492,215	[85.78 s]
+0.0.N: Trace Attempt 1,415	[87.28 s]
+1.0.Ht: Trace Attempt 787	[44.52 s]
+1.0.B: Trace Attempt 845	[44.52 s]
+1.0.Hp: Trace Attempt 600	[44.86 s]
+0.0.B: Trace Attempt 1,289	[89.16 s]
+1.0.N: Trace Attempt 986	[46.90 s]
+0.0.N: Trace Attempt 1,427	[91.36 s]
+1.0.B: Trace Attempt 880	[48.55 s]
+1.0.Ht: Trace Attempt 811	[48.58 s]
+1.0.Hp: Trace Attempt 624	[48.97 s]
+0.0.B: Trace Attempt 1,315	[93.23 s]
+1.0.N: Trace Attempt 1,054	[51.01 s]
+0.0.Ht: Trace Attempt 500,815	[94.87 s]
+1.0.B: Trace Attempt 910	[52.61 s]
+1.0.Ht: Trace Attempt 839	[52.65 s]
+0.0.N: Trace Attempt 1,458	[95.76 s]
+1.0.Hp: Trace Attempt 648	[53.06 s]
+0.0.B: Trace Attempt 1,337	[97.45 s]
+1.0.N: Trace Attempt 1,103	[55.37 s]
+0.0.Ht: Trace Attempt 530,436	[98.87 s]
+1.0.B: Trace Attempt 945	[56.61 s]
+1.0.Ht: Trace Attempt 866	[56.72 s]
+1.0.Hp: Trace Attempt 670	[57.10 s]
+0.0.N: Trace Attempt 1,500	[100.22 s]
+0.0.B: Trace Attempt 1,360	[101.48 s]
+0.0.Ht: Trace Attempt 559,736	[102.87 s]
+1.0.B: Trace Attempt 980	[60.67 s]
+1.0.Ht: Trace Attempt 895	[60.81 s]
+1.0.N: Trace Attempt 1,114	[60.96 s]
+1.0.Hp: Trace Attempt 689	[61.23 s]
+0.0.N: Trace Attempt 1,530	[104.25 s]
+0.0.B: Trace Attempt 1,383	[105.53 s]
+0.0.Ht: Trace Attempt 589,198	[106.87 s]
+1.0.B: Trace Attempt 1,016	[64.72 s]
+1.0.Ht: Trace Attempt 922	[64.90 s]
+1.0.Hp: Trace Attempt 712	[65.24 s]
+1.0.N: Trace Attempt 1,116	[66.62 s]
+0.0.B: Trace Attempt 1,404	[109.65 s]
+0.0.N: Trace Attempt 1,549	[110.08 s]
+0.0.Ht: Trace Attempt 618,126	[110.87 s]
+1.0.B: Trace Attempt 1,051	[68.77 s]
+1.0.Ht: Trace Attempt 950	[68.97 s]
+1.0.Hp: Trace Attempt 735	[69.33 s]
+1.0.N: Trace Attempt 1,253	[70.65 s]
+0.0.B: Trace Attempt 1,427	[113.78 s]
+0.0.N: Trace Attempt 1,640	[114.49 s]
+0.0.Ht: Trace Attempt 646,946	[114.87 s]
+1.0.B: Trace Attempt 1,084	[72.84 s]
+1.0.Ht: Trace Attempt 977	[72.97 s]
+1.0.Hp: Trace Attempt 753	[73.37 s]
+0.0.B: Trace Attempt 1,448	[117.83 s]
+0.0.Ht: Trace Attempt 675,367	[118.87 s]
+1.0.B: Trace Attempt 1,116	[76.87 s]
+1.0.Ht: Trace Attempt 1,007	[77.00 s]
+0.0.N: Trace Attempt 1,654	[120.07 s]
+1.0.Hp: Trace Attempt 773	[77.41 s]
+1.0.N: Trace Attempt 1,289	[77.52 s]
+[<embedded>] % visualize -new_window; visualize -violation -property <embedded>::BAUDGEN.assert_count_clock_cycles_between_tick -bg
+INFO (IVS015): Setting Visualize task to "<embedded>".
+INFO (IVS008): Expanding analysis region to enable visualization of "<embedded>::BAUDGEN.assert_count_clock_cycles_between_tick".
+INFO (IPF031): Settings used for proof thread 2:
+    orchestration                 = off (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = Hp Ht N B 
+    proofgrid_per_engine_max_jobs = 1
+    proofgrid_max_jobs            = 4
+    max engine jobs               = Hp Ht N B, total 4 (max 4)
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+2: Using multistage preprocessing
+2: Starting reduce
+background 2
+2: Finished reduce in 0.001s
+2.0.PRE: Performing Proof Simplification...
+2.0.Hp: clocks: 2, declared: 1, disabling: 0, posedge: 2, negedge: 0, noedge: 0, bothedge: 0
+2.0.Hp: Proof Simplification Iteration 1	[0.00 s]
+2.0.Hp: Proof Simplification Iteration 2	[0.00 s]
+2.0.PRE: A proof was found: No trace exists. [0.00 s]
+2.0.PRE: A proof was found: No trace exists. [0.00 s]
+2.0.PRE: Proof Simplification completed in 0.01 s
+2: About to start centralized ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+2: =============================== ProofGrid start ===============================
+2: ProofGrid usable level: 1
+2: ProofGrid is starting event handling
+2.0.Ht: Proofgrid shell started at 106625@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_3
+2.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+2.0.Ht: Trace Attempt  1	[0.00 s]
+2.0.N: Proofgrid shell started at 106626@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_3
+2.0.Hp: Proofgrid shell started at 106624@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_3
+2.0.Ht: Trace Attempt  2	[0.00 s]
+2.0.Ht: Trace Attempt  3	[0.00 s]
+2.0.Ht: Trace Attempt  4	[0.00 s]
+2.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+2.0.Hp: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+2.0.B: Proofgrid shell started at 106627@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_3
+2.0.Ht: Trace Attempt  5	[0.00 s]
+2.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+2.0.N: Last scan. Per property time limit: 0s
+2.0.B: Last scan. Per property time limit: 0s
+2.0.N: Trace Attempt  1	[0.00 s]
+2.0.B: Trace Attempt  1	[0.00 s]
+2.0.N: Trace Attempt  2	[0.00 s]
+2.0.B: Trace Attempt  2	[0.00 s]
+2.0.N: Trace Attempt  2	[0.01 s]
+2.0.B: Trace Attempt  3	[0.01 s]
+2.0.N: Trace Attempt  3	[0.01 s]
+2.0.N: Trace Attempt  4	[0.01 s]
+2.0.N: Trace Attempt  5	[0.01 s]
+2.0.B: Trace Attempt  4	[0.01 s]
+2.0.B: Trace Attempt  5	[0.01 s]
+2.0.N: Trace Attempt  1	[0.02 s]
+2.0.N: Trace Attempt  2	[0.02 s]
+2.0.N: Trace Attempt  3	[0.03 s]
+2.0.N: Trace Attempt  5	[0.03 s]
+0.0.B: Trace Attempt 1,471	[122.00 s]
+2.0.Hp: Trace Attempt  1	[0.15 s]
+2.0.Hp: Trace Attempt  2	[0.15 s]
+2.0.Hp: Trace Attempt  3	[0.15 s]
+2.0.Hp: Trace Attempt  4	[0.15 s]
+2.0.Hp: Trace Attempt  5	[0.15 s]
+[<embedded>] % visualize -new_window; visualize -violation -property <embedded>::BAUDGEN.assert_count_clock_cycles_between_tick -bg
+INFO (IVS015): Setting Visualize task to "<embedded>".
+INFO (IVS008): Expanding analysis region to enable visualization of "<embedded>::BAUDGEN.assert_count_clock_cycles_between_tick".
+INFO (IPF031): Settings used for proof thread 3:
+    orchestration                 = off (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = Hp Ht N B 
+    proofgrid_per_engine_max_jobs = 1
+    proofgrid_max_jobs            = 4
+    max engine jobs               = Hp Ht N B, total 4 (max 4)
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+3: Using multistage preprocessing
+3: Starting reduce
+background 3
+3: Finished reduce in 0.001s
+3.0.PRE: Performing Proof Simplification...
+3.0.Hp: clocks: 2, declared: 1, disabling: 0, posedge: 2, negedge: 0, noedge: 0, bothedge: 0
+3.0.Hp: Proof Simplification Iteration 1	[0.00 s]
+3.0.Hp: Proof Simplification Iteration 2	[0.00 s]
+3.0.PRE: A proof was found: No trace exists. [0.00 s]
+3.0.PRE: A proof was found: No trace exists. [0.00 s]
+3.0.PRE: Proof Simplification completed in 0.01 s
+3: About to start centralized ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+3: =============================== ProofGrid start ===============================
+3: ProofGrid usable level: 1
+3: ProofGrid is starting event handling
+3.0.B: Proofgrid shell started at 106683@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_4
+3.0.Hp: Proofgrid shell started at 106680@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_4
+3.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+3.0.Hp: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+3.0.B: Last scan. Per property time limit: 0s
+3.0.Ht: Proofgrid shell started at 106681@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_4
+3.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+3.0.B: Trace Attempt  1	[0.00 s]
+3.0.N: Proofgrid shell started at 106682@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_4
+3.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+3.0.N: Last scan. Per property time limit: 0s
+3.0.Ht: Trace Attempt  1	[0.00 s]
+3.0.Ht: Trace Attempt  2	[0.00 s]
+3.0.Ht: Trace Attempt  3	[0.00 s]
+3.0.B: Trace Attempt  2	[0.00 s]
+3.0.Ht: Trace Attempt  4	[0.00 s]
+3.0.N: Trace Attempt  1	[0.00 s]
+3.0.Ht: Trace Attempt  5	[0.00 s]
+3.0.N: Trace Attempt  2	[0.00 s]
+3.0.B: Trace Attempt  3	[0.00 s]
+3.0.N: Trace Attempt  2	[0.00 s]
+3.0.B: Trace Attempt  4	[0.01 s]
+3.0.B: Trace Attempt  5	[0.01 s]
+3.0.N: Trace Attempt  3	[0.01 s]
+3.0.N: Trace Attempt  4	[0.01 s]
+3.0.N: Trace Attempt  5	[0.01 s]
+3.0.N: Trace Attempt  1	[0.01 s]
+3.0.N: Trace Attempt  2	[0.01 s]
+3.0.N: Trace Attempt  3	[0.02 s]
+3.0.N: Trace Attempt  5	[0.02 s]
+3.0.Hp: Trace Attempt  1	[0.04 s]
+3.0.Hp: Trace Attempt  2	[0.04 s]
+3.0.Hp: Trace Attempt  3	[0.04 s]
+3.0.Hp: Trace Attempt  4	[0.04 s]
+3.0.Hp: Trace Attempt  5	[0.04 s]
+0.0.Ht: Trace Attempt 703,634	[122.87 s]
+1.0.B: Trace Attempt 1,146	[80.90 s]
+0.0.N: Trace Attempt 1,823	[124.14 s]
+1.0.Ht: Trace Attempt 1,030	[81.17 s]
+1.0.N: Trace Attempt 1,401	[81.61 s]
+1.0.Hp: Trace Attempt 791	[81.91 s]
+2.0.Ht: Trace Attempt 239	[4.01 s]
+2.0.B: Trace Attempt 259	[4.03 s]
+2.0.N: Trace Attempt 366	[4.11 s]
+0.0.B: Trace Attempt 1,494	[126.15 s]
+3.0.Ht: Trace Attempt 220	[4.01 s]
+3.0.B: Trace Attempt 253	[4.02 s]
+3.0.N: Trace Attempt 366	[4.22 s]
+1.0.B: Trace Attempt 1,171	[84.94 s]
+1.0.Ht: Trace Attempt 1,052	[85.28 s]
+0.0.N: Trace Attempt 1,845	[129.07 s]
+1.0.N: Trace Attempt 1,415	[86.19 s]
+1.0.Hp: Trace Attempt 805	[86.24 s]
+2.0.B: Trace Attempt 336	[8.04 s]
+2.0.Ht: Trace Attempt 312	[8.08 s]
+2.0.N: Trace Attempt 619	[8.12 s]
+0.0.B: Trace Attempt 1,513	[130.19 s]
+3.0.B: Trace Attempt 342	[8.06 s]
+3.0.Ht: Trace Attempt 302	[8.07 s]
+3.0.N: Trace Attempt 619	[8.23 s]
+1.0.B: Trace Attempt 1,195	[89.03 s]
+1.0.Ht: Trace Attempt 1,069	[89.38 s]
+1.0.Hp: Trace Attempt 819	[90.29 s]
+0.0.N: Trace Attempt 1,999	[133.26 s]
+1.0.N: Trace Attempt 1,427	[90.36 s]
+2.0.Ht: Trace Attempt 371	[12.10 s]
+2.0.N: Trace Attempt 777	[12.17 s]
+2.0.B: Trace Attempt 402	[12.23 s]
+0.0.B: Trace Attempt 1,535	[134.28 s]
+3.0.Ht: Trace Attempt 364	[12.10 s]
+3.0.B: Trace Attempt 404	[12.10 s]
+3.0.N: Trace Attempt 777	[12.29 s]
+1.0.B: Trace Attempt 1,217	[93.11 s]
+1.0.Ht: Trace Attempt 1,088	[93.56 s]
+0.0.Ht: Trace Attempt 710,147	[137.10 s]
+1.0.N: Trace Attempt 1,456	[94.39 s]
+1.0.Hp: Trace Attempt 834	[94.50 s]
+2.0.Ht: Trace Attempt 427	[16.10 s]
+2.0.B: Trace Attempt 470	[16.27 s]
+0.0.B: Trace Attempt 1,549	[138.51 s]
+3.0.Ht: Trace Attempt 422	[16.14 s]
+3.0.B: Trace Attempt 468	[16.14 s]
+0.0.N: Trace Attempt 2,232	[139.22 s]
+2.0.N: Trace Attempt 806	[17.45 s]
+1.0.B: Trace Attempt 1,243	[97.20 s]
+3.0.N: Trace Attempt 806	[17.56 s]
+1.0.Ht: Trace Attempt 1,107	[97.64 s]
+0.0.Ht: Trace Attempt 737,369	[141.10 s]
+1.0.Hp: Trace Attempt 850	[98.53 s]
+1.0.N: Trace Attempt 1,492	[98.61 s]
+2.0.Ht: Trace Attempt 480	[20.12 s]
+2.0.B: Trace Attempt 535	[20.29 s]
+0.0.B: Trace Attempt 1,568	[142.62 s]
+3.0.B: Trace Attempt 526	[20.16 s]
+3.0.Ht: Trace Attempt 475	[20.17 s]
+0.0.N: Trace Attempt 2,281	[143.74 s]
+2.0.N: Trace Attempt 838	[22.16 s]
+1.0.B: Trace Attempt 1,269	[101.25 s]
+1.0.Ht: Trace Attempt 1,126	[101.77 s]
+3.0.N: Trace Attempt 838	[22.26 s]
+0.0.Ht: Trace Attempt 764,864	[145.10 s]
+1.0.N: Trace Attempt 1,518	[102.77 s]
+1.0.Hp: Trace Attempt 865	[102.78 s]
+2.0.Ht: Trace Attempt 525	[24.27 s]
+2.0.B: Trace Attempt 588	[24.33 s]
+0.0.B: Trace Attempt 1,587	[146.80 s]
+3.0.Ht: Trace Attempt 522	[24.22 s]
+3.0.B: Trace Attempt 576	[24.26 s]
+1.0.B: Trace Attempt 1,294	[105.36 s]
+1.0.Ht: Trace Attempt 1,141	[105.97 s]
+0.0.Ht: Trace Attempt 790,702	[149.10 s]
+2.0.N: Trace Attempt 863	[27.73 s]
+1.0.Hp: Trace Attempt 881	[106.90 s]
+1.0.N: Trace Attempt 1,546	[106.95 s]
+0.0.N: Trace Attempt 2,304	[150.09 s]
+2.0.Ht: Trace Attempt 564	[28.28 s]
+2.0.B: Trace Attempt 638	[28.47 s]
+3.0.N: Trace Attempt 863	[27.79 s]
+3.0.Ht: Trace Attempt 561	[28.26 s]
+0.0.B: Trace Attempt 1,602	[150.99 s]
+3.0.B: Trace Attempt 622	[28.34 s]
+1.0.B: Trace Attempt 1,318	[109.37 s]
+0.0.Ht: Trace Attempt 815,488	[153.10 s]
+1.0.Ht: Trace Attempt 1,159	[110.39 s]
+2.0.N: Trace Attempt 907	[31.88 s]
+1.0.Hp: Trace Attempt 896	[110.93 s]
+1.0.N: Trace Attempt 1,573	[110.95 s]
+2.0.Ht: Trace Attempt 597	[32.33 s]
+2.0.B: Trace Attempt 678	[32.47 s]
+3.0.N: Trace Attempt 907	[31.93 s]
+0.0.B: Trace Attempt 1,620	[155.00 s]
+3.0.Ht: Trace Attempt 595	[32.42 s]
+3.0.B: Trace Attempt 663	[32.46 s]
+1.0.B: Trace Attempt 1,337	[113.56 s]
+0.0.Ht: Trace Attempt 841,876	[157.10 s]
+1.0.Ht: Trace Attempt 1,177	[114.75 s]
+2.0.N: Trace Attempt 929	[35.89 s]
+1.0.Hp: Trace Attempt 910	[115.03 s]
+1.0.N: Trace Attempt 1,642	[115.04 s]
+2.0.Ht: Trace Attempt 629	[36.40 s]
+2.0.B: Trace Attempt 708	[36.48 s]
+3.0.N: Trace Attempt 932	[35.96 s]
+3.0.Ht: Trace Attempt 628	[36.51 s]
+3.0.B: Trace Attempt 691	[36.51 s]
+0.0.B: Trace Attempt 1,639	[159.21 s]
+0.0.N: Trace Attempt 2,343	[159.37 s]
+1.0.B: Trace Attempt 1,358	[117.73 s]
+0.0.Ht: Trace Attempt 867,727	[161.10 s]
+1.0.Ht: Trace Attempt 1,197	[118.93 s]
+1.0.Hp: Trace Attempt 925	[119.07 s]
+2.0.Ht: Trace Attempt 659	[40.53 s]
+2.0.B: Trace Attempt 746	[40.62 s]
+2.0.N: Trace Attempt 976	[40.75 s]
+3.0.B: Trace Attempt 726	[40.56 s]
+0.0.B: Trace Attempt 1,658	[163.33 s]
+1.0.N: Trace Attempt 1,654	[120.39 s]
+3.0.Ht: Trace Attempt 659	[40.72 s]
+3.0.N: Trace Attempt 976	[40.78 s]
+1.0.B: Trace Attempt 1,378	[121.87 s]
+0.0.Ht: Trace Attempt 892,731	[165.10 s]
+1.0.Ht: Trace Attempt 1,213	[123.11 s]
+1.0.Hp: Trace Attempt 941	[123.23 s]
+2.0.Ht: Trace Attempt 683	[44.56 s]
+2.0.B: Trace Attempt 784	[44.63 s]
+3.0.B: Trace Attempt 763	[44.63 s]
+0.0.B: Trace Attempt 1,675	[167.36 s]
+1.0.N: Trace Attempt 1,823	[124.46 s]
+3.0.Ht: Trace Attempt 683	[44.76 s]
+1.0.B: Trace Attempt 1,395	[125.97 s]
+2.0.N: Trace Attempt 986	[47.12 s]
+0.0.Ht: Trace Attempt 919,373	[169.10 s]
+0.0.N: Trace Attempt 2,361	[169.27 s]
+3.0.N: Trace Attempt 986	[47.13 s]
+1.0.Ht: Trace Attempt 1,229	[127.17 s]
+1.0.Hp: Trace Attempt 955	[127.32 s]
+2.0.Ht: Trace Attempt 709	[48.57 s]
+2.0.B: Trace Attempt 818	[48.64 s]
+0.0.B: Trace Attempt 1,694	[171.37 s]
+3.0.B: Trace Attempt 798	[48.75 s]
+3.0.Ht: Trace Attempt 710	[48.89 s]
+1.0.N: Trace Attempt 1,845	[129.38 s]
+1.0.B: Trace Attempt 1,416	[129.99 s]
+2.0.N: Trace Attempt 1,054	[51.23 s]
+0.0.Ht: Trace Attempt 946,078	[173.10 s]
+3.0.N: Trace Attempt 1,054	[51.23 s]
+1.0.Ht: Trace Attempt 1,246	[131.32 s]
+2.0.Ht: Trace Attempt 737	[52.64 s]
+1.0.Hp: Trace Attempt 969	[131.58 s]
+2.0.B: Trace Attempt 850	[52.78 s]
+0.0.B: Trace Attempt 1,713	[175.44 s]
+3.0.B: Trace Attempt 829	[52.78 s]
+3.0.Ht: Trace Attempt 738	[53.00 s]
+1.0.N: Trace Attempt 1,999	[133.56 s]
+1.0.B: Trace Attempt 1,435	[134.20 s]
+2.0.N: Trace Attempt 1,103	[55.63 s]
+0.0.Ht: Trace Attempt 958,708	[177.84 s]
+3.0.N: Trace Attempt 1,103	[55.62 s]
+1.0.Ht: Trace Attempt 1,264	[135.45 s]
+2.0.Ht: Trace Attempt 765	[56.73 s]
+2.0.B: Trace Attempt 879	[56.85 s]
+1.0.Hp: Trace Attempt 985	[135.84 s]
+0.0.B: Trace Attempt 1,729	[179.45 s]
+3.0.B: Trace Attempt 860	[56.80 s]
+0.0.N: Trace Attempt 2,377	[179.51 s]
+3.0.Ht: Trace Attempt 766	[57.04 s]
+0.0.B: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[181.08 s].
+0.0.B: Morphing to Tri
+0.0.B: Trace Attempt 1,735	[180.89 s]
+0.0.B: All properties determined. [0.00 s]
+0.0.B: Exited with Success (@ 0.00 s)
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.Tri: Trace Attempt  1	[0.00 s]
+0.0.Tri:    0.00" ---- Launching main thread ----
+0.0.Tri:    0.02" ---- Launching abstraction thread ----
+0.0.Tri:    0.03" ---- Launching multi-phase simplification thread ----
+1.0.B: Trace Attempt 1,454	[138.25 s]
+0.0.Tri: Trace Attempt  2	[0.15 s]
+0.0.Tri: Trace Attempt  3	[0.15 s]
+0.0.Tri: Trace Attempt  4	[0.15 s]
+0.0.Tri: Trace Attempt  5	[0.15 s]
+0.0.N: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[181.27 s].
+0.0.N: Morphing to AM
+0.0.N: All properties determined. [0.00 s]
+0.0.N: Exited with Success (@ 0.00 s)
+0.0.AM: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.AM: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.AM: Trace Attempt  1	[0.00 s]
+0.0.AM: Trace Attempt  1	[0.00 s]
+0.0.AM: Trace Attempt  2	[0.00 s]
+0.0.AM: Trace Attempt  1	[0.00 s]
+0.0.AM: Trace Attempt  2	[0.00 s]
+0.0.AM: Trace Attempt  3	[0.00 s]
+0.0.AM: Trace Attempt  4	[0.00 s]
+0.0.AM: Trace Attempt  5	[0.00 s]
+0.0.AM: Trace Attempt  1	[0.01 s]
+0.0.AM: Trace Attempt  2	[0.01 s]
+0.0.AM: Trace Attempt  3	[0.01 s]
+0.0.AM: Trace Attempt  5	[0.01 s]
+0.0.Ht: Trace Attempt 982,867	[181.84 s]
+0.0.AM: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.67 s].
+0.0.AM: Morphing to Hts
+0.0.AM: Trace Attempt 99	[0.65 s]
+0.0.AM: All properties determined. [0.00 s]
+0.0.AM: Exited with Success (@ 0.00 s)
+0.0.Hts: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Hts: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.Hts: Trace Attempt  1	[0.00 s]
+0.0.Hts: Trace Attempt  2	[0.00 s]
+0.0.Hts: Trace Attempt  3	[0.00 s]
+0.0.Hts: Trace Attempt  4	[0.00 s]
+0.0.Hts: Trace Attempt  5	[0.00 s]
+0.0.Tri:    0.85" Simplification phase 1 complete
+0.0.Tri: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.92 s].
+0.0.Tri: Morphing to D
+0.0.Tri: Trace Attempt 60	[0.21 s]
+0.0.Tri: All properties determined. [0.00 s]
+0.0.Tri: Exited with Success (@ 0.00 s)
+0.0.D: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.D: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.D: Trace Attempt  1	[0.00 s]
+0.0.D: Trace Attempt  2	[0.00 s]
+0.0.D: Trace Attempt  3	[0.00 s]
+1.0.N: Trace Attempt 2,232	[139.42 s]
+1.0.Ht: Trace Attempt 1,280	[139.54 s]
+2.0.Ht: Trace Attempt 789	[60.75 s]
+2.0.B: Trace Attempt 910	[60.96 s]
+1.0.Hp: Trace Attempt 997	[140.16 s]
+2.0.N: Trace Attempt 1,114	[61.33 s]
+3.0.B: Trace Attempt 886	[60.84 s]
+3.0.N: Trace Attempt 1,114	[61.30 s]
+3.0.Ht: Trace Attempt 791	[61.39 s]
+1.0.B: Trace Attempt 1,473	[142.35 s]
+0.0.Hts: Trace Attempt 244	[4.00 s]
+1.0.Ht: Trace Attempt 1,295	[143.66 s]
+2.0.Ht: Trace Attempt 809	[64.82 s]
+1.0.N: Trace Attempt 2,281	[143.79 s]
+[<embedded>] % prove -bg -all
+2.0.B: Trace Attempt 940	[65.03 s]
+INFO (IPF036): Starting proof on task: "<embedded>", 1 properties to prove with 1 already proven/unreachable
+background 4
+INFO (IPF031): Settings used for proof thread 4:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    proofgrid_max_jobs            = 4
+    max engine jobs               = auto (max 4)
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+4: Using multistage preprocessing
+4: Starting reduce
+4: Finished reduce in 0.001s
+4.0.PRE: Performing Proof Simplification...
+4.0.N: clocks: 2, declared: 1, disabling: 0, posedge: 2, negedge: 0, noedge: 0, bothedge: 0
+4.0.N: Proof Simplification Iteration 1	[0.00 s]
+4.0.N: Proof Simplification Iteration 2	[0.00 s]
+4.0.PRE: A proof was found: No trace exists. [0.00 s]
+INFO (IPF057): 4.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+4.0.PRE: Proof Simplification completed in 0.00 s
+4: About to start centralized ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+4: =============================== ProofGrid start ===============================
+4: ProofGrid usable level: 1
+4: ProofGrid is starting event handling
+4.0.N: Proofgrid shell started at 108490@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_5
+4.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.N: Last scan. Per property time limit: 0s
+4.0.N: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+4.0.N: Trace Attempt  1	[0.00 s]
+4.0.Hp: Proofgrid shell started at 108491@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_5
+4.0.Hp: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.N: Trace Attempt  2	[0.00 s]
+4.0.N: Trace Attempt  2	[0.00 s]
+4.0.Hp: Trace Attempt  1	[0.00 s]
+4.0.Hp: Trace Attempt  2	[0.00 s]
+4.0.N: Trace Attempt  3	[0.01 s]
+4.0.N: Trace Attempt  4	[0.01 s]
+4.0.N: Trace Attempt  5	[0.01 s]
+4.0.Hp: Trace Attempt  3	[0.01 s]
+4.0.Hp: Trace Attempt  4	[0.01 s]
+4.0.Hp: Trace Attempt  5	[0.01 s]
+4.0.N: Trace Attempt  1	[0.01 s]
+4.0.N: Trace Attempt  2	[0.01 s]
+4.0.N: Trace Attempt  3	[0.02 s]
+4.0.Ht: Proofgrid shell started at 108510@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_5
+4.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.Ht: Trace Attempt  1	[0.00 s]
+4.0.Ht: Trace Attempt  2	[0.00 s]
+4.0.Ht: Trace Attempt  3	[0.00 s]
+4.0.Ht: Trace Attempt  4	[0.00 s]
+4.0.B: Proofgrid shell started at 108511@ee-mill3.ee.ic.ac.uk(local) jg_100461_ee-mill3.ee.ic.ac.uk_5
+4.0.Ht: Trace Attempt  5	[0.00 s]
+4.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.B: Last scan. Per property time limit: 0s
+4.0.B: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+4.0.N: Trace Attempt  5	[0.02 s]
+4.0.B: Trace Attempt  1	[0.00 s]
+4.0.B: Trace Attempt  2	[0.00 s]
+4.0.B: Trace Attempt  3	[0.01 s]
+4.0.B: Trace Attempt  4	[0.01 s]
+4.0.B: Trace Attempt  5	[0.01 s]
+1.0.Hp: Trace Attempt 1,013	[144.44 s]
+3.0.B: Trace Attempt 915	[64.87 s]
+3.0.Ht: Trace Attempt 813	[65.60 s]
+0.0.Ht: Trace Attempt 986,895	[188.79 s]
+0.0.Ht: Trace Attempt 986,896	[188.79 s]
+0.0.Ht: Internal limit reached at cycle 986895. [188.77 s]
+WARNING (WPF043): 0.0.Ht: Internal limit reached at cycle 986895. Engine has exited.
+2.0.N: Trace Attempt 1,116	[67.19 s]
+0.0.Ht: Exited with Success (@ 189.09 s)
+0.0.Ht: Completed, Restart ignored.
+1.0.B: Trace Attempt 1,495	[146.42 s]
+3.0.N: Trace Attempt 1,116	[67.15 s]
+0.0.Hts: Trace Attempt 324	[8.03 s]
+2.0.Ht: Trace Attempt 830	[68.82 s]
+1.0.Ht: Trace Attempt 1,309	[147.85 s]
+2.0.B: Trace Attempt 970	[69.03 s]
+4.0.Hp: Trace Attempt 180	[4.01 s]
+4.0.Ht: Trace Attempt 227	[4.03 s]
+4.0.B: Trace Attempt 250	[4.03 s]
+4.0.N: Trace Attempt 366	[4.28 s]
+3.0.B: Trace Attempt 945	[68.96 s]
+0.0.Hts: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[10.01 s].
+0.0.Hts: Morphing to AM
+0.0.Hts: Trace Attempt 354	[9.94 s]
+0.0.Hts: All properties determined. [0.00 s]
+0.0.Hts: Exited with Success (@ 0.00 s)
+0.0.AM: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.AM: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.AM: Trace Attempt  1	[0.00 s]
+0.0.D: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[9.95 s].
+0.0.D: Morphing to Tri
+0.0.D: Trace Attempt 52	[2.79 s]
+0.0.D: All properties determined. [0.00 s]
+0.0.D: Exited with Success (@ 0.00 s)
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.AM: Trace Attempt  1	[0.00 s]
+0.0.AM: Trace Attempt  2	[0.00 s]
+0.0.AM: Trace Attempt  1	[0.00 s]
+0.0.AM: Trace Attempt  2	[0.00 s]
+0.0.AM: Trace Attempt  3	[0.00 s]
+0.0.AM: Trace Attempt  4	[0.00 s]
+0.0.AM: Trace Attempt  5	[0.00 s]
+0.0.AM: Trace Attempt  1	[0.01 s]
+0.0.AM: Trace Attempt  2	[0.01 s]
+0.0.Tri: Starting proof for property "BAUDGEN.assert_count_clock_cycles_between_tick"	[0.00 s].
+0.0.Tri: Trace Attempt  1	[0.00 s]
+0.0.AM: Trace Attempt  3	[0.01 s]
+0.0.AM: Trace Attempt  5	[0.01 s]
+0.0.Tri:    0.00" ---- Launching main thread ----
+0.0.Tri:    0.03" ---- Launching abstraction thread ----
+0.0.Tri:    0.03" ---- Launching multi-phase simplification thread ----
+0.0.Tri: Trace Attempt  2	[0.14 s]
+0.0.Tri: Trace Attempt  3	[0.14 s]
+0.0.Tri: Trace Attempt  4	[0.14 s]
+0.0.Tri: Trace Attempt  5	[0.14 s]
+3.0.Ht: Trace Attempt 834	[69.75 s]
+1.0.Hp: Trace Attempt 1,027	[149.76 s]
+0.0.Tri:    0.86" Simplification phase 1 complete
+1.0.N: Trace Attempt 2,304	[149.94 s]
+0.0.Tri:    0.90" Simplification phase 2 complete
+2.0.N: Trace Attempt 1,243	[71.21 s]
+1.0.B: Trace Attempt 1,514	[150.53 s]
+0.0.Tri:    1.51" Simplification phase 3 complete
+   1.51" ---- Completed simplification thread ----
+0.0.Tri:    1.51" ---- Restarting main thread on simplified netlist ----
+0.0.Tri:    1.54" ---- Restarting abstraction thread on simplified netlist ----
+0.0.AM: Requesting engine job to stop
+0.0.Tri: Requesting engine job to stop
+0.0.Hp: Requesting engine job to terminate
+INFO (IPF144): 0: Initiating shutdown of proof [193.62]
+0.0.Tri: Trace Attempt 117	[1.18 s]
+0.0.Tri: A proof was found: No trace exists. [1.64 s]
+INFO (IPF057): 0.0.Tri: The property "BAUDGEN.assert_count_clock_cycles_between_tick" was proven in 1.64 s.
+0: ProofGrid usable level: 0
+0.0.Tri: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[1.64 s].
+0.0.Tri: All properties determined. [191.03 s]
+4.0.N: Requesting engine job to stop
+4.0.B: Requesting engine job to stop
+4.0.Hp: Requesting engine job to terminate
+4.0.Ht: Requesting engine job to terminate
+INFO (IPF144): 4: Initiating shutdown of proof [6.64]
+4.0.Hp: Interrupted (multi)
+4.0.Ht: Interrupted (multi)
+4.0.Ht: Trace Attempt 280	[6.61 s]
+4.0.Ht: All properties determined. [6.62 s]
+4.0.Hp: Trace Attempt 227	[6.61 s]
+4.0.Hp: All properties determined. [6.64 s]
+0.0.Tri: Exited with Success (@ 193.63 s)
+4.0.Ht: Exited with Success (@ 6.65 s)
+4: ProofGrid usable level: 0
+0.0.AM: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[1.66 s].
+0.0.AM: Trace Attempt 243	[1.64 s]
+0.0.AM: All properties determined. [193.63 s]
+0.0.Hp: Interrupted (multi)
+4.0.Hp: Exited with Success (@ 6.67 s)
+0.0.Hp: Trace Attempt 15	[0.02 s]
+0.0.Hp: All properties determined. [193.64 s]
+4.0.B: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[6.64 s].
+4.0.B: Trace Attempt 311	[6.62 s]
+4.0.B: All properties determined. [6.64 s]
+4.0.B: Exited with Success (@ 6.68 s)
+4.0.N: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[6.68 s].
+1.0.N: Requesting engine job to stop
+0.0.Hp: Exited with Success (@ 193.67 s)
+1.0.B: Requesting engine job to stop
+1.0.Hp: Requesting engine job to terminate
+1.0.Ht: Requesting engine job to terminate
+INFO (IPF144): 1: Initiating shutdown of proof [150.70]
+4.0.N: Trace Attempt 515	[6.52 s]
+4.0.N: All properties determined. [6.68 s]
+1.0.Hp: Interrupted (multi)
+1.0.Hp: Trace Attempt 1,029	[150.54 s]
+1.0.Hp: All properties determined. [150.69 s]
+4.0.N: Exited with Success (@ 6.69 s)
+4: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :   4
+     engine jobs started                           :   4
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      N        0.03        6.64        0.00       99.50 %
+     Hp        0.03        6.64        0.00       99.53 %
+     Ht        0.02        6.62        0.00       99.69 %
+      B        0.02        6.62        0.00       99.68 %
+    all        0.03        6.63        0.00       99.60 %
+
+    Data read    : 116.48 kiB
+    Data written : 2.20 kiB
+
+4: ProofGrid usable level: 0
+4: All pending notifications were processed.
+INFO (IPF059): Completed proof on task: "<embedded>"
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 3
+                 assertions                   : 2
+                  - proven                    : 2 (100%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+1.0.Ht: Interrupted (multi)
+1.0.Ht: Trace Attempt 1,316	[150.51 s]
+1.0.Ht: All properties determined. [150.68 s]
+1.0.Hp: Exited with Success (@ 150.73 s)
+1: ProofGrid usable level: 0
+0.0.AM: Exited with Success (@ 193.69 s)
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :   8
+     engine jobs started                           :   4
+     unexpected terminations                       :   1
+     times jobs hit internal limit                 :   1
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+     Hp        0.03      193.62        0.00       99.99 %
+     Ht        0.02      188.79        0.00       99.99 %
+     AM        0.03      193.28        0.00       99.98 %
+    Tri        0.02      193.40        0.00       99.99 %
+    all        0.02      192.27        0.00       99.99 %
+
+    Data read    : 44.01 MiB
+    Data written : 50.19 MiB
+
+0: ProofGrid usable level: 0
+0: All pending notifications were processed.
+1.0.Ht: Exited with Success (@ 150.73 s)
+INFO (IPF059): Completed proof on task: "<embedded>"
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 3
+                 assertions                   : 2
+                  - proven                    : 2 (100%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+1.0.B: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[150.81 s].
+1.0.B: Trace Attempt 1,515	[150.68 s]
+1.0.B: All properties determined. [150.80 s]
+1.0.B: Exited with Success (@ 150.84 s)
+3.0.N: Trace Attempt 1,243	[71.16 s]
+1.0.N: Stopped processing property "BAUDGEN.assert_count_clock_cycles_between_tick"	[151.02 s].
+1.0.N: All properties determined. [151.01 s]
+1.0.N: Exited with Success (@ 151.07 s)
+1: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :   4
+     engine jobs started                           :   4
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      N        0.04      150.70        0.00       99.97 %
+     Hp        0.03      150.70        0.00       99.98 %
+     Ht        0.02      150.68        0.00       99.98 %
+      B        0.02      150.68        0.00       99.98 %
+    all        0.03      150.69        0.00       99.98 %
+
+    Data read    : 1.23 MiB
+    Data written : 2.26 kiB
+
+1: ProofGrid usable level: 0
+1: All pending notifications were processed.
+INFO (IPF059): Completed proof on task: "<embedded>"
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 3
+                 assertions                   : 2
+                  - proven                    : 2 (100%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+2.0.Ht: Trace Attempt 854	[72.84 s]
+2.0.B: Trace Attempt 1,001	[73.08 s]
+3.0.B: Trace Attempt 977	[72.98 s]
+3.0.Ht: Trace Attempt 860	[73.80 s]
+3.0.N: Trace Attempt 1,288	[75.19 s]
+2.0.Ht: Trace Attempt 880	[76.86 s]
+2.0.B: Trace Attempt 1,039	[77.10 s]
+3.0.B: Trace Attempt 1,001	[77.02 s]
+2.0.N: Trace Attempt 1,289	[78.38 s]
+3.0.Ht: Trace Attempt 890	[77.97 s]
+3.0.N: Trace Attempt 1,316	[79.20 s]
+2.0.Ht: Trace Attempt 908	[80.94 s]
+2.0.B: Trace Attempt 1,076	[81.22 s]
+3.0.B: Trace Attempt 1,028	[81.13 s]
+2.0.N: Trace Attempt 1,401	[82.50 s]
+3.0.Ht: Trace Attempt 919	[82.06 s]
+2.0.Ht: Trace Attempt 938	[84.94 s]
+2.0.B: Trace Attempt 1,108	[85.25 s]
+3.0.N: Trace Attempt 1,410	[84.50 s]
+3.0.B: Trace Attempt 1,053	[85.26 s]
+3.0.Ht: Trace Attempt 950	[86.17 s]
+2.0.N: Trace Attempt 1,415	[87.02 s]
+2.0.Ht: Trace Attempt 966	[89.05 s]
+2.0.B: Trace Attempt 1,143	[89.44 s]
+3.0.N: Trace Attempt 1,417	[89.16 s]
+3.0.B: Trace Attempt 1,080	[89.42 s]
+3.0.Ht: Trace Attempt 977	[90.22 s]
+2.0.N: Trace Attempt 1,427	[91.10 s]
+2.0.Ht: Trace Attempt 995	[93.14 s]
+2.0.B: Trace Attempt 1,174	[93.53 s]
+3.0.B: Trace Attempt 1,105	[93.47 s]
+3.0.N: Trace Attempt 1,445	[93.63 s]
+3.0.Ht: Trace Attempt 1,007	[94.25 s]
+2.0.N: Trace Attempt 1,458	[95.53 s]
+2.0.Ht: Trace Attempt 1,022	[97.17 s]
+2.0.B: Trace Attempt 1,203	[97.69 s]
+3.0.B: Trace Attempt 1,133	[97.54 s]
+3.0.N: Trace Attempt 1,490	[98.42 s]
+3.0.Ht: Trace Attempt 1,031	[98.48 s]
+2.0.N: Trace Attempt 1,500	[99.86 s]
+2.0.Ht: Trace Attempt 1,040	[101.22 s]
+2.0.B: Trace Attempt 1,230	[101.74 s]
+3.0.B: Trace Attempt 1,157	[101.60 s]
+3.0.N: Trace Attempt 1,518	[102.73 s]
+3.0.Ht: Trace Attempt 1,053	[102.85 s]
+2.0.N: Trace Attempt 1,531	[103.86 s]
+2.0.Ht: Trace Attempt 1,060	[105.45 s]
+2.0.B: Trace Attempt 1,261	[105.91 s]
+3.0.B: Trace Attempt 1,179	[105.69 s]
+3.0.Ht: Trace Attempt 1,070	[106.87 s]
+2.0.N: Trace Attempt 1,549	[109.42 s]
+2.0.Ht: Trace Attempt 1,082	[109.65 s]
+2.0.B: Trace Attempt 1,290	[110.07 s]
+3.0.N: Trace Attempt 1,549	[109.40 s]
+3.0.B: Trace Attempt 1,203	[109.94 s]
+3.0.Ht: Trace Attempt 1,090	[111.02 s]
+2.0.Ht: Trace Attempt 1,098	[113.70 s]
+2.0.N: Trace Attempt 1,640	[113.82 s]
+2.0.B: Trace Attempt 1,319	[114.18 s]
+3.0.N: Trace Attempt 1,640	[113.69 s]
+3.0.B: Trace Attempt 1,226	[114.06 s]
+3.0.Ht: Trace Attempt 1,111	[115.07 s]
+2.0.Ht: Trace Attempt 1,115	[117.72 s]
+2.0.B: Trace Attempt 1,341	[118.25 s]
+3.0.B: Trace Attempt 1,253	[118.09 s]
+2.0.N: Trace Attempt 1,654	[119.21 s]
+3.0.Ht: Trace Attempt 1,130	[119.09 s]
+3.0.N: Trace Attempt 1,654	[119.17 s]
+2.0.Ht: Trace Attempt 1,134	[121.94 s]
+2.0.B: Trace Attempt 1,363	[122.35 s]
+3.0.B: Trace Attempt 1,275	[122.28 s]
+2.0.N: Trace Attempt 1,826	[123.44 s]
+3.0.Ht: Trace Attempt 1,148	[123.34 s]
+3.0.N: Trace Attempt 1,826	[123.40 s]
+2.0.Ht: Trace Attempt 1,151	[126.00 s]
+2.0.B: Trace Attempt 1,386	[126.40 s]
+3.0.B: Trace Attempt 1,294	[126.45 s]
+2.0.N: Trace Attempt 1,845	[127.98 s]
+3.0.Ht: Trace Attempt 1,167	[127.37 s]
+3.0.N: Trace Attempt 1,845	[127.98 s]
+2.0.Ht: Trace Attempt 1,170	[130.34 s]
+2.0.B: Trace Attempt 1,406	[130.58 s]
+3.0.B: Trace Attempt 1,317	[130.53 s]
+2.0.N: Trace Attempt 1,999	[132.06 s]
+3.0.Ht: Trace Attempt 1,186	[131.39 s]
+3.0.N: Trace Attempt 1,999	[132.12 s]
+2.0.Ht: Trace Attempt 1,189	[134.40 s]
+2.0.B: Trace Attempt 1,428	[134.64 s]
+3.0.B: Trace Attempt 1,335	[134.76 s]
+3.0.Ht: Trace Attempt 1,205	[135.71 s]
+2.0.N: Trace Attempt 2,232	[137.81 s]
+2.0.Ht: Trace Attempt 1,208	[138.54 s]
+2.0.B: Trace Attempt 1,448	[138.73 s]
+3.0.N: Trace Attempt 2,232	[137.95 s]
+3.0.B: Trace Attempt 1,355	[138.85 s]
+3.0.Ht: Trace Attempt 1,222	[140.09 s]
+2.0.N: Trace Attempt 2,281	[142.07 s]
+2.0.Ht: Trace Attempt 1,228	[142.88 s]
+2.0.B: Trace Attempt 1,470	[142.88 s]
+3.0.N: Trace Attempt 2,281	[142.25 s]
+3.0.B: Trace Attempt 1,377	[142.96 s]
+3.0.Ht: Trace Attempt 1,243	[144.21 s]
+2.0.Ht: Trace Attempt 1,247	[147.00 s]
+2.0.B: Trace Attempt 1,494	[147.02 s]
+3.0.B: Trace Attempt 1,395	[147.04 s]
+2.0.N: Trace Attempt 2,304	[148.01 s]
+3.0.N: Trace Attempt 2,304	[148.27 s]
+3.0.Ht: Trace Attempt 1,263	[148.40 s]
+2.0.B: Trace Attempt 1,515	[151.05 s]
+2.0.Ht: Trace Attempt 1,269	[151.22 s]
+3.0.B: Trace Attempt 1,418	[151.18 s]
+INFO (IPL005): Received request to exit from the console.
+INFO: Waiting for proof threads to stop...
+INFO (IPF144): 3: Initiating shutdown of proof [152.73]
+3.0.Ht: Interrupted (multi)
+3.0.Ht: Trace Attempt 1,280	[152.32 s]
+3.0.Ht: Interrupted. [152.72 s]
+INFO (IPF144): 2: Initiating shutdown of proof [153.57]
+2.0.Ht: Interrupted (multi)
+2.0.Ht: Trace Attempt 1,278	[153.39 s]
+2.0.Ht: Interrupted. [153.56 s]
+2.0.Hp: Interrupted (multi)
+2.0.Hp: Trace Attempt 50	[0.58 s]
+2.0.Hp: Interrupted. [153.56 s]
+3.0.Ht: Exited with Success (@ 152.74 s)
+3.0.Hp: Interrupted (multi)
+3.0.Hp: Trace Attempt 58	[0.57 s]
+3.0.Hp: Interrupted. [152.74 s]
+2.0.Ht: Exited with Success (@ 153.58 s)
+2.0.Hp: Exited with Success (@ 153.59 s)
+3.0.Hp: Exited with Success (@ 152.76 s)
+3.0.B: Trace Attempt 1,426	[152.73 s]
+3.0.B: All properties either determined or skipped. [152.84 s]
+3.0.B: Exited with Success (@ 152.85 s)
+2.0.B: Trace Attempt 1,529	[153.50 s]
+2.0.B: All properties either determined or skipped. [153.68 s]
+2.0.B: Exited with Success (@ 153.70 s)
+2.0.N: All properties either determined or skipped. [153.81 s]
+3.0.N: All properties either determined or skipped. [153.01 s]
+2.0.N: Exited with Success (@ 153.86 s)
+2: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :   4
+     engine jobs started                           :   4
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+     Hp        0.03      153.57        0.00       99.98 %
+     Ht        0.03      153.57        0.00       99.98 %
+      N        0.03      153.82        0.00       99.98 %
+      B        0.03      153.69        0.00       99.98 %
+    all        0.03      153.66        0.00       99.98 %
+
+    Data read    : 1.23 MiB
+    Data written : 90.10 kiB
+
+2: ProofGrid usable level: 0
+2: All pending notifications were processed.
+3.0.N: Exited with Success (@ 153.07 s)
+3: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :   4
+     engine jobs started                           :   4
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+     Hp        0.03      152.75        0.00       99.98 %
+     Ht        0.03      152.73        0.00       99.98 %
+      N        0.03      153.03        0.00       99.98 %
+      B        0.03      152.85        0.00       99.98 %
+    all        0.03      152.84        0.00       99.98 %
+
+    Data read    : 1.23 MiB
+    Data written : 90.09 kiB
+
+3: ProofGrid usable level: 0
+3: All pending notifications were processed.
+INFO (IVS026): "visualize" command stopped.
+INFO (IVS026): "visualize" command stopped.
+INFO: Proof threads stopped.

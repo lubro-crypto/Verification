@@ -2,7 +2,6 @@ class baudgen_model;
 
     int count = 10417; 
     int counting = 0;
-    int multiplier =0 ;
     function void Setbaudrate(logic [3:0] setBaudrate );
         case (setBaudrate)
         
@@ -39,22 +38,11 @@ class baudgen_model;
     task run(input bit resetn, output bit baudtick);
         if(!resetn)begin
             counting = 0;
-            multiplier = 0; 
         end 
         else if(counting == count)begin
             counting = 0; 
-            if(multiplier == 15)
-                begin
-                    multiplier = 0; 
-                    baudtick = 1'b1;
-                end
-            else
-            begin
-                baudtick = 1'b0; //Set so you don't have to have the if(b_tick ==15)
-                multiplier++;
-            end        
 
-
+            baudtick = 1'b1;
             end
         else begin
             counting = counting + 1;
