@@ -20,32 +20,49 @@ module parity_tb
 #(parameter DWIDTH = 5)
 (
 parity_if.TB parityif);
+
+covergroup cover_a_value;
+    coverpoint parityif.data_in {
+        bins zero = {0}; 
+        bins lo = {[1:2]};
+        bins med = {[3:4]};
+        bins hi = {[5:6]};
+        bins max = {7};
+    }
+    coverpoint parityif.odd {
+        bins even = {0};
+        bins odd = {1};
+    }
+endgroup 
 input_generator ig0;
 parity_gen_model pg0;
 bit out;
+cover_a_value cav0;
 initial 
 begin
 	pg0 = new();
 	ig0 = new() ;
+	cav0 = new();
 	fork
 		begin 
 			forever #1 begin
 				pg0.run(parityif.data_in, parityif.odd, out );
 			end
 		end
-		begin 
-			forever #1 begin
-				if(out != parityif.data_out)begin
-					$error("There is a problem with the generation") ;
-				end
-			end
-		end
+		// begin 
+		// 	forever #1 begin
+		// 		if(out != parityif.data_out)begin
+		// 			$error("There is a problem with the generation") ;
+		// 		end
+		// 	end
+		// end
 	join_none
 	//So odd
-	for(int i = 0; i< 100; i++)begin
+	for(int i = 0; i< 1000; i++)begin
 		ig0.randomize();
 		parityif.data_in <= ig0.parity_input;
 		parityif.odd <= ig0.paritysel;
+		cav0.sample();
 		#10;
 	end
 	$finish;

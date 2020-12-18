@@ -54,34 +54,34 @@ modport TB(
 endinterface
 module parity_chk_top_tb
 (
-parity_chk_top_if parityif);
+parity_chk_top_if.TB parityif);
 
 input_generator ig0;
 reg [15:0] simulate_ERRCOUNTER = 'd0;
 parity_checker_model pc0;
 
-// covergroup cover_a_value;
-//    // coverpoint parityif.data_in iff (parityif.reset); 
-//     coverpoint parityif.data_in {
-//         bins zero = {0}; 
-//         bins lo = {[1:2]};
-//         bins med = {[3:5]};
-//         bins hi = {[6:7]};
-//         bins max = {8};
-//     }
-//    // coverpoint parityif.SEL iff (parityif.reset);
-//     coverpoint parityif.SEL {
-//         bins even = {0};
-//         bins odd = {1};
-//     }
-// endgroup
-// cover_a_value cav0;
+covergroup cover_a_value;
+   coverpoint parityif.data_in iff (parityif.reset); 
+    coverpoint parityif.data_in {
+        bins zero = {0}; 
+        bins lo = {[1:2]};
+        bins med = {[3:5]};
+        bins hi = {[6:7]};
+        bins max = {8};
+    }
+   coverpoint parityif.SEL iff (parityif.reset);
+    coverpoint parityif.SEL {
+        bins even = {0};
+        bins odd = {1};
+    }
+endgroup
+cover_a_value cav0;
 
 initial 
 begin
     pc0 = new();
 	ig0 = new();
-    // cav0 = new();
+    cav0 = new();
     fork
         begin
             forever 
@@ -104,7 +104,7 @@ begin
 		assert(ig0.randomize) else $fatal;
 		parityif.data_in <= ig0.parity_input;
         parityif.SEL <= ig0.parity_bit;
-        // cav0.sample();
+        cav0.sample();
         #10;
         parityif.start <= 1'b1;
         #10;
@@ -118,7 +118,7 @@ begin
 		assert(ig0.randomize) else $fatal;
 		parityif.data_in <= ig0.parity_input;
         parityif.SEL <= ig0.parity_bit;
-        // cav0.sample();
+        cav0.sample();
         #10;
         parityif.start <= 1'b1;
         #10;

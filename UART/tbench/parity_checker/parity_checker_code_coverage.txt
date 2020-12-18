@@ -1,0 +1,38 @@
+Coverage Report Summary Data by file
+
+=================================================================================
+=== File: parity_checker/parity_checker.sv
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                            5         5         0    100.00
+    Branches                         6         5         1     83.33
+    FEC Expression Terms             7         5         2     71.42
+    Toggle Bins                     30        30         0    100.00
+
+=================================================================================
+=== File: parity_checker/parity_checker_top.sv
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                            4         3         1     75.00
+    Branches                         5         4         1     80.00
+    Toggle Bins                     90        50        40     55.55
+
+=================================================================================
+=== File: parity_checker/parity_chk_top_tb.sv
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                           44        43         1     97.72
+    Branches                        11         9         2     81.81
+    FEC Condition Terms              7         3         4     42.85
+    Toggle Bins                     88        48        40     54.54
+
+
+TOTAL COVERGROUP COVERAGE: 86.09%  COVERGROUP TYPES: 1
+
+TOTAL ASSERTION COVERAGE: 100.00%  ASSERTIONS: 3
+
+Total Coverage By File (code coverage only, filtered view): 70.77%
+
