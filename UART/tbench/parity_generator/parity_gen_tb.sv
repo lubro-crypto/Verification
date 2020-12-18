@@ -49,13 +49,13 @@ begin
 				pg0.run(parityif.data_in, parityif.odd, out );
 			end
 		end
-		// begin 
-		// 	forever #1 begin
-		// 		if(out != parityif.data_out)begin
-		// 			$error("There is a problem with the generation") ;
-		// 		end
-		// 	end
-		// end
+		begin 
+			forever #1 begin
+				if(out != parityif.data_out)begin
+					$error("There is a problem with the generation") ;
+				end
+			end
+		end
 	join_none
 	//So odd
 	for(int i = 0; i< 1000; i++)begin
