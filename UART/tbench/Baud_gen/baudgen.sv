@@ -61,8 +61,8 @@ initial
 always @ (posedge clk, negedge resetn)
   begin
     if(!resetn)begin
-      assert (resetn == 0)
-        else $error ("Error: reset not low");
+      // assert (resetn == 0)
+      //   else $error ("Error: reset not low");
       count_reg <= 0;
     end
     else
@@ -76,29 +76,50 @@ end
 assign index = 'd13 - set_baud;
 
 assign count = Counts_Array[index*19+:256];
-wire inject_bug = 1'b0;
 
-assign count_next = ((count_reg == count) ? 0 : count_reg + 1'b1 + inject_bug);
-property check_count_reg;
-@(posedge clk) disable iff (!resetn)
-if(count_reg == count)
-    $rose (baudtick);
-endproperty
-assert_check_count_reg: assert property (check_count_reg)
-    else $fatal("tick gone high when count reg != count");
- 
-property check_reset;
-@(posedge clk)
-if(resetn == 1'b0) 
-    baudtick == 1'b0 && count_reg == 'd0;
-    
-
-endproperty
-assert_resetn: assert property (check_reset)
-    else $fatal("Reset has gone low but the program hasn't reset it");
-
+assign count_next = ((count_reg == count) ? 0 : count_reg + 1'b1);
 
 assign baudtick = ((count_reg == count && resetn == 1) ? 1'b1 : 1'b0);
+
+property check_count_reg;
+@(posedge clk) disable iff (!resetn)
+if(count_reg == count && resetn == 1'b1)
+    baudtick == 1;
+endproperty
+
+assert_check_count_reg: assert property (check_count_reg)
+    else $error("tick gone high when count reg != count");
+////////////////////////////////////
+
+// Formal verification, reset can never go low so cant test this one
+// property check_reset;
+// @(posedge clk)
+//     // resetn == 1'b0 |-> baudtick == 1'b0 && count_reg == 'd0;
+//       baudtick == 1'b0 && count_reg == 'd0 |-> resetn == 1'b0;
+// endproperty
+
+// assert_check_reset: assert property (check_reset)
+//     else $error("Reset has gone low but the program hasn't reset it");
+
+///////////////////////////////////////////////////////////////////////////
+
+reg [18:0] counter = 1'b0;
+
+always @(posedge clk, negedge resetn)
+  if(!resetn)
+    counter = 'd0;
+  else if (baudtick != 1'b1 ) begin
+    counter = counter + 1;
+  end
+  else counter = 0;
+
+property count_clock_cycles_between_tick;
+@(negedge baudtick)
+  count == counter;
+endproperty 
+
+assert_count_clock_cycles_between_tick: assert property (count_clock_cycles_between_tick)
+    else  $error("counter false");
 
 endmodule
 

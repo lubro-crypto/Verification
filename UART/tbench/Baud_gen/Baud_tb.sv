@@ -6,7 +6,8 @@ interface Baud_if(input bit clk);
 	
 	modport TB( output set_in,
 	output reset_in,
-	input baudtick_out);
+	input baudtick_out,
+	input clk);
 
 endinterface
 
@@ -19,31 +20,66 @@ class input_generator;
 endclass
 
 module Baud_tb( Baud_if.TB baudif);
-	covergroup cover_inputs {
-		slow = ['d0:'d5];
-		fast = ['d6:'d14];
+
+baudgen_model bg0;
+bit sim_baudtick;
+input_generator ig0;
+	covergroup cover_inputs;
+	coverpoint baudif.set_in iff (baudif.reset_in);
+	coverpoint baudif.set_in {
+		bins vslow = {['d0:'d3]};
+		bins slow = {['d4:'d7]};
+		bins fast = {['d8:'d10]};
+		bins vfast = {['d11:'d13]};
 	}
 	endgroup
-
+cover_inputs cova;
+logic [19:0] sim_counter;
 	initial begin
+		bg0 = new();
+		ig0 = new();
+		cova = new();
 		fork
+			begin forever 
+				begin
+					@(baudif.set_in);
+					bg0.Setbaudrate(baudif.set_in);
+				end
+			end
 			begin
 				forever begin
-					@(posedge clk)begin
-						
+					@(posedge baudif.clk, negedge baudif.reset_in)begin
+						bg0.run(baudif.reset_in, sim_baudtick, sim_counter);
 					end
+				end
+			end
+			begin forever #1
+				begin
+					if(sim_baudtick != baudif.baudtick_out)
+						$error("There is an error with the model/rtl");
 				end
 			end
 		join_none
 		baudif.reset_in <= 1'b0;
 		#30 baudif.reset_in <= 1'b1;
 		for(int i = 0 ; i < 14 ; i++)begin
-			
-			baudif.set_in <= i;
+			assert(ig0.randomize()) else $fatal;
+			baudif.set_in <= ig0.set_baud;
+			cova.sample();
 			@(posedge baudif.baudtick_out)
 			begin
 				#20 $display("The output is going high!");
-				
+			end
+		end
+		baudif.reset_in <= 1'b0;
+		#30 baudif.reset_in <= 1'b1;
+		for(int i = 0 ; i < 14 ; i++)begin
+			assert(ig0.randomize()) else $fatal;
+			baudif.set_in <= ig0.set_baud;
+			cova.sample();
+			@(posedge baudif.baudtick_out)
+			begin
+				#20 $display("The output is going high!");
 			end
 		end
 	$finish;

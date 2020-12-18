@@ -1,4 +1,4 @@
-class uart_rx;
+class uart_rx_model;
 
 
     localparam logic [2:0] idle_st = 'd0;

@@ -1,3 +1,7 @@
+`include "uart_tx_model.sv"
+`include "uart_rx_model.sv"
+`include "parity_checker_model.sv"
+`include "baudgen_model.sv"
 interface uart_rx_if(input bit clk);
 
     logic resetn;
