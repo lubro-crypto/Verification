@@ -12,7 +12,8 @@ Otherwise odd parity
 wire [DWIDTH:0] Test_wire =  {data_output, data_in[DWIDTH-1:0]};
 
 wire even_parity = ^data_in;
-assign data_output = (PARITYSEL ==1'b1) ? ~even_parity : even_parity;
+wire inject_bug = 1'b0;
+assign data_output = (PARITYSEL ==1'b1 && !inject_bug) ? ~even_parity : even_parity;
 
 //check behaviour
 property check_parity;
