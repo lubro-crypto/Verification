@@ -70,7 +70,7 @@ module UART_TX(
   reg verif_data;
   reg verif_parity;
   reg verif_stop;
-  wire inject_bug = 1'b0;
+
 //State Machine  
   always @(posedge clk, negedge resetn)
   begin
@@ -107,7 +107,7 @@ module UART_TX(
       idle_st:
       begin
         count_tick = 0;                                            /////////////////////////////////////////////////////
-        tx_next = !inject_bug;
+        tx_next = 1'b1;
         if(tx_start)
         begin
           next_state = start_st;
@@ -201,7 +201,7 @@ end
 //check behaviour
 property check_tx;
   @(posedge clk)
-    ( (current_state == idle_st && tx_next == 1)  || (current_state == start_st && tx_next == 0) ||(current_state == data_st && tx_next == data_reg[0]) ||(current_state == parity_st  && tx_next == parity_bit) || (current_state == stop_st && tx_next == 1) ) == 1
+    ( (current_state == idle_st && tx_next == 1)  || (current_state == start_st && tx_next == 0) ||(current_state == data_st && tx_next == data_reg[0]) ||(current_state == parity_st  && tx_next == parity_bit) || (current_state == stop_st && tx_next == 1) ) == 1;
 
 endproperty
 assert_check_tx: assert property (check_tx)

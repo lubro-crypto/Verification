@@ -91,14 +91,12 @@ module AHBUART(
   
   //parity type
   //0 - even
-  //1 - odd
-  wire parity_type;
+  //
 
   //parity checker wires
   wire [15:0] ERRCOUNTER;
   wire RxParity; 
-  wire TxParity = 1'b0; //Change if you want 
-
+  wire TxParity ; //Change if you want 
   //AHB Regs
   reg [1:0] last_HTRANS;
   reg [31:0] last_HADDR;
@@ -125,8 +123,8 @@ module AHBUART(
     if(baudrate_wr) Baud_Reg <= HWDATA[3:0]; //If the address is to 01 then, write to the baud rate register
   end
   
-  assign parity_type = 1'b0;
 
+assign TxParity = 1'b0;
 
   //If Read and FIFO_RX is empty - wait.
   assign HREADYOUT = ~tx_full;
@@ -154,7 +152,7 @@ module AHBUART(
   );
   monitor_top mt0(
     .clk(HCLK),
-    .Tx_parity(Txparity),
+    .Tx_parity(1'b0),
     .HRESETn(HRESETn),
     .ERRCOUNTER(ERRCOUNTER),
     .Tx_RS_232(Tx_RS_232),
@@ -218,7 +216,7 @@ module AHBUART(
     .d_in(tx_data[7:0]),
     .tx_done(tx_done),
     .tx(Tx_RS_232),
-    .PARITYSEL(Txparity)
+    .PARITYSEL(1'b0)
   );
  
   

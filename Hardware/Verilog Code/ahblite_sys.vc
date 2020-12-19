@@ -13,3 +13,4 @@ rtl/ahb_uart/parity_checker.sv
 rtl/ahb_uart/fifo.v
 rtl/ahb_uart/baudgen.sv
 rtl/ahb_uart/AHBUART.sv
+tbench/monitor_top.sv

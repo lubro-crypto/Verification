@@ -68,8 +68,6 @@ module UART_RX(
   reg rx_prev  = 'd0;
   reg req;
   
-  wire inject_bug = 1'b0;
-
 //State Machine  
   always @ (posedge clk, negedge resetn)
   begin
@@ -96,17 +94,20 @@ module UART_RX(
     b_next = b_reg;
     count_next = count_reg;
     data_next = data_reg;
-    rx_done = 1'b0;
         
     case(current_state)
       idle_st:
+      begin
         if(~rx)
           begin
             next_state = start_st;
             b_next = 0;
           end
+          rx_done = 1'b0;
+      end
           
       start_st:
+      begin
         if(b_tick)begin
           if(b_reg == 15) //Why 7
             begin
@@ -117,13 +118,15 @@ module UART_RX(
           else
             b_next = b_reg + 1'b1;
         end
+        rx_done = 1'b0;
+      end
       data_st:
+      begin
         if(b_tick)begin
           if(b_reg == 15)
             begin
               b_next = 0;
-              if(inject_bug) data_next = {!rx, data_reg [8:1]};
-              else data_next = {rx, data_reg [8:1]};
+              data_next = {rx, data_reg [8:1]};
               if(count_next ==8) // 8 Data bits ==> now 9
                 next_state = stop_st;
               else
@@ -132,6 +135,8 @@ module UART_RX(
           else
             b_next = b_reg + 1;
         end
+        rx_done = 1'b0;
+      end
       stop_st:
         if(b_tick)begin
           if(b_reg == 15) //One stop bit
@@ -140,62 +145,110 @@ module UART_RX(
               rx_done = 1'b1;
             end
           else
-           b_next = b_reg + 1;
+            begin
+              b_next = b_reg + 1;
+              rx_done = 1'b0;
+           end
         end
     endcase
   end
-  
-  //////////////////////////////////////////////////////////////////////////////////////
 
   assign dout = data_reg;
-always@(posedge clk)begin
-  verif_idle <= (current_state == idle_st && rx == 1);
-  verif_data <= (current_state == data_st && rx == data_next [8]);
-  verif_start <= (current_state == start_st && rx == 0) ;
-  verif_stop <= (current_state == stop_st && rx == 1) ;
-  verif_reset <= (resetn == 0 && data_reg == 'd0);
-end
 
-always@(posedge b_tick)begin
-  if (b_reg == 15 && current_state == data_st) begin
-    rx_prev = rx;
-  end
-end
+  //////////////////////////////////////////////////////////////////////////////////////
   
   property check_rx_1; 
-    @(posedge b_tick) disable iff (current_state != idle_st) 
-      rx == 1;
+    @(posedge b_tick) 
+      current_state == idle_st |-> rx_done == 1'b0;
 endproperty
 assert_check_rx_1: assert property (check_rx_1)
-else $error("Error: incorrect rx1 sequenced");
-/////////
+else $error("Error: 1");
 
   property check_rx_2; 
-    @(posedge b_tick) disable iff (current_state != start_st) 
-    rx == 0;
-endproperty 
+    @(posedge b_tick) 
+     current_state == data_st |-> rx_done == 1'b0; 
+endproperty
 assert_check_rx_2: assert property (check_rx_2)
-else $error("Error: incorrect rx2 sequenced");
-////////
+else $error("Error: 2");
 
   property check_rx_3; 
-    @(posedge b_tick) disable iff (current_state != stop_st) 
-    rx == 1;
-endproperty 
-assert_check_rx_3: assert property (check_rx_3)
-else $error("Error: incorrect rx3 sequenced");
-///////
+    @(posedge clk)   
+       rx_done == 1'b1 |-> b_reg == 15;
+endproperty
+assert_check_rx_3: assert property (check_rx_3) 
+else $error("Error: 3");
 
   property check_rx_4; 
-    @(posedge b_tick) disable iff (current_state != data_st) 
-    ##1 rx_prev == data_reg [8];
-endproperty 
-assert_check_rx_4: assert property (check_rx_4)
-else $error("Error: incorrect rx4 sequenced");
-
-
+    @(posedge clk)   
+    current_state == idle_st  && !rx |-> next_state == start_st;
+endproperty
+assert_check_rx_4: assert property (check_rx_4) 
+else $error("Error: 3");
 
 endmodule
+
+//   property check_rx_3; 
+//     @(posedge b_tick) 
+//      current_state == 
+// endproperty
+// assert_check_rx_3: assert property (check_rx_3)
+// else $error("Error: 3");
+
+//   property check_rx_4; 
+//     @(posedge b_tick) 
+    
+// endproperty
+// assert_check_rx_4: assert property (check_rx_4)
+// else $error("Error: 4");
+
+
+
+//these dont work for formal because rx can take any state
+
+// always@(posedge b_tick)begin
+//   if (b_reg == 15 && current_state == data_st) begin
+//     rx_prev = rx;
+//   end
+// end
+
+// always@(posedge clk)begin
+//   verif_idle <= (current_state == idle_st && rx == 1);
+//   verif_data <= (current_state == data_st && rx == data_next [8]);
+//   verif_start <= (current_state == start_st && rx == 0) ;
+//   verif_stop <= (current_state == stop_st && rx == 1) ;
+//   verif_reset <= (resetn == 0 && data_reg == 'd0);
+// end
+
+//   property check_rx_1; 
+//     @(posedge b_tick) disable iff (current_state != idle_st) 
+//       rx == 1;
+// endproperty
+// assert_check_rx_1: assert property (check_rx_1)
+// else $error("Error: incorrect rx1 sequenced");
+// /////////
+
+//   property check_rx_2; 
+//     @(posedge b_tick) disable iff (current_state != start_st) 
+//     rx == 0;
+// endproperty 
+// assert_check_rx_2: assert property (check_rx_2)
+// else $error("Error: incorrect rx2 sequenced");
+// ////////
+
+//   property check_rx_3; 
+//     @(posedge b_tick) disable iff (current_state != stop_st) 
+//     rx == 1;
+// endproperty 
+// assert_check_rx_3: assert property (check_rx_3)
+// else $error("Error: incorrect rx3 sequenced");
+// ///////
+
+//   property check_rx_4; 
+//     @(posedge b_tick) disable iff ((~(current_state == data_st || current_state == stop_st)) && count_reg > 0) 
+//      rx_prev == data_reg [8];
+// endproperty 
+// assert_check_rx_4: assert property (check_rx_4)
+// else $error("Error: incorrect rx4 sequenced");
 
 
 //check behaviour
